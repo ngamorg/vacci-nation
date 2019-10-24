@@ -1,0 +1,10 @@
+Comments by Julius Siebenaller:
+
+13.10.2019
+----------
+- Dividing the population into different groups,  including pro-/ anti-vaccinators and maybe even a few that can’t vaccinate during a specific period (too young, ill, etc.)
+- Including (besides Nash equilibrium) Stackelberg equilibrium and a social planner perspective
+Maybe we can combine a few of the above features with:
+- social learning/ adaptive behaviour
+- Vaccine efficiency and risk aversion
+- Social Planner: Penalties for not-vaccinating and re-distribution of these incomes
