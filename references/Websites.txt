@@ -1,0 +1,4 @@
+Modeling with Python
+--------------------
+
+http://jaredgerschler.blog/2018/12/05/epidemic-modeling-using-python-part-i/
