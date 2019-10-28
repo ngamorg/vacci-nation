@@ -21,8 +21,6 @@ import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
-# define classes & utility functions
-def hello_world():
 """
 SPECIFICATION: here goes a description of the function/class method should do. It helps both consumers of the function and as a form of documentation.
 PRE: pre-conditions of the function/method. Here the type of the inputs is made explicit, so as to avoid (for example) runtime errors. 
