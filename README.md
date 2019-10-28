@@ -22,8 +22,8 @@ Semester project in the Agent Based Modeling and Social System Simulation course
 (At the end of the project you want to find the answer to these questions)
 (Formulate a few, clear questions. Articulate them in sub-questions, from the more general to the more specific. )
 
-What is the relationship between social attitudes with respect to vaccination and the dynamics of epidemic episodes?
-What is the influence of health policy in social planner games in relation to the laissez faire results?
+> * What is the relationship between social attitudes with respect to vaccination and the dynamics of epidemic episodes?
+> * What is the influence of health policy in social planner games in relation to the laissez faire results?
 
 ## Expected Results
 
