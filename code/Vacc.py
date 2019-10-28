@@ -17,7 +17,7 @@ Description
 """
 
 # import all required libraries
-import numpy as no
+import numpy as np
 import matplotlib.pyplot as plt
 
 # define classes & utility functions
