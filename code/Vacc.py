@@ -35,6 +35,8 @@ Further useful sources:
     https://pythonhosted.org/epydemic/glossary.html#term-compartmented-model-of-disease
 """
 
+# SIRS-model with viatal dynamics
+
 # demographics:
 N = 5000 # total population
 I0 = 0.001*N # initial infected
@@ -46,7 +48,8 @@ mu = 0.0006 # mortality rate
 # transition dynamics
 x = 0.1 # vaccination coverage (percentage of new vaccinated children per unit of time)
 beta = 0.35 # contact rate
-gamma = 0.01 # mean recovery rate
+gamma = 0.05 # mean recovery rate
+xi = 0.1 # recovered return to susceptible 
 
 # initial conditions vector
 y0 = S0, I0, R0
@@ -54,17 +57,17 @@ y0 = S0, I0, R0
 t = np.linspace(0, 200, 200)
 
 # differential equations
-def func(y, t, N, beta, gamma, v, mu):
+def func(y, t, N, beta, gamma, v, mu, xi):
     # S, I, R values assigned from vector
     S, I, R = y
     # differential equations
-    dSdt = -beta * S * I / N + v * (1-x) * N - mu * S
-    dIdt = beta * S * I / N - gamma * I - mu * I
-    dRdt = gamma * I + v * x * N - mu * R
+    dSdt = (-beta * S * I / N) + (v * (1-x) * N) - (mu * S) + (xi * R)
+    dIdt = (beta * S * I / N) - (gamma * I) - (mu * I)
+    dRdt = (gamma * I) + (v * x * N) - (mu * R) - (xi * R)
     return dSdt, dIdt, dRdt
 
 # Integrate the diff eqs over the time array
-values = odeint(func, y0, t, args=(N, beta, gamma, v, mu))
+values = odeint(func, y0, t, args=(N, beta, gamma, v, mu, xi))
 # assign S, I, R values from values transpose
 S, I, R = values.T
 fig = plt.figure()
