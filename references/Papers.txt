@@ -1,3 +1,7 @@
 [1] Francis (1997) - Dynamic epidemiology and the market for vaccinations
 [2] Manfredi et. al. (2010) - Optimal vaccination choice, vaccination games, and rational exemption: An appraisal 
 [3] Ehrhardt et al. (2019)- SIR-based mathematical modeling
+[4] Poletti et al. (2011) - The Effect of Risk Perception on the 2009 H1N1 Pandemic Influenza Dynamics
+  - Combining evolutionary game theory with a mathematical model for influenza transmission.
+  - Agents spontaneuosly decide/ change on one of two strategy facing a trade-off between less risk exposure versus higher internal costs(limited activities, etc.) 
+  - Payoff determined by perceived risk: cost of infection and prevalence of cases 
