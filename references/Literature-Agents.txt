@@ -8,4 +8,8 @@
 [5] Shim et al. (2012) - A game dynamic model for vaccine skeptics and vaccine believers: Measles as an example
   - Game-theoretic model of measles transmission: Analysing the effect of perceived vaccine risks on uptake levels
   - Examination of vaccine choice in a two-group population: vaccine sceptics vs. believers - difference perception of vaccine and infection risks
-  - 
+  -
+[6] Bhattacharyya, Bauch (2011) - “Wait and see” vaccinating behaviour during a pandemic: A game theoretic analysis
+- Combining game theory with disease transmission, modelling a "wait and see" strategy
+- Perceived vaccination costs and risk of infection decline as share of vaccinators increases 
+- Model with feed-back and -forward mechanisms: high vaccination costs perpetuate through the period 
