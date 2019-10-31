@@ -5,3 +5,7 @@
   - Combining evolutionary game theory with a mathematical model for influenza transmission.
   - Agents spontaneuosly decide/ change on one of two strategy facing a trade-off between less risk exposure versus higher internal costs(limited activities, etc.) 
   - Payoff determined by perceived risk: cost of infection and prevalence of cases 
+[5] Shim et al. (2012) - A game dynamic model for vaccine skeptics and vaccine believers: Measles as an example
+  - Game-theoretic model of measles transmission: Analysing the effect of perceived vaccine risks on uptake levels
+  - Examination of vaccine choice in a two-group population: vaccine sceptics vs. believers - difference perception of vaccine and infection risks
+  - 
