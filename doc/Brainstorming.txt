@@ -8,3 +8,10 @@ Maybe we can combine a few of the above features with:
 - social learning/ adaptive behaviour
 - Vaccine efficiency and risk aversion
 - Social Planner: Penalties for not-vaccinating and re-distribution of these incomes
+
+
+
+Notes on disease-modeling (type of disease, mathematical model, network, etc.): // as found in the literature
+- SIR reaction-diffusion model: Smallpox, mumps (Sun et al. (2016) and included references) 
+- Diseases with spatial-temporal patterns: measles, hantavirus, influenza, chronic hepatitis C (Sun et al. (2016))
+- Seasonality and noise: e.g. childhood diseases (varying contact rate, e.g. school terms), 'winter' diseases, 
