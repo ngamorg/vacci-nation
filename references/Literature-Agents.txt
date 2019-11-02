@@ -10,6 +10,7 @@
   - Examination of vaccine choice in a two-group population: vaccine sceptics vs. believers - difference perception of vaccine and infection risks
   -
 [6] Bhattacharyya, Bauch (2011) - “Wait and see” vaccinating behaviour during a pandemic: A game theoretic analysis
-- Combining game theory with disease transmission, modelling a "wait and see" strategy
+- Population game with "wait and see" strategy for a new vaccination combined with a model of disease transmission
 - Perceived vaccination costs and risk of infection decline as share of vaccinators increases 
 - Model with feed-back and -forward mechanisms: high vaccination costs perpetuate through the period 
+- Immunization effect of vaccine sets in with a delay 
