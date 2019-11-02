@@ -15,4 +15,10 @@
 - Immunization effect of vaccine sets in with a delay
 - Perceived vaccination costs and risk of infection decline as share of vaccinators increases 
 - Model with feed-back and -forward mechanisms: high vaccination costs perpetuate through the period 
-
+[7] Poletti et al. (2012) - Risk perception and effectiveness of uncoordinated behavioral responsesin an emerging epidemic
+- Ability of an individual to reduce susceptibility to the infection: reduction of contacts and of transmission probability
+- Model of infectious dynamics combines (1) disease transmission dynamics and (2) imitation dynamics, with different time scales
+- SIR-model, but with infectious as symptomatic/ asymptomatic and similar for recovered; S&I adpot normal or altered (reduction of infectious contacts) behavior
+- Perceived prevalence modeled according to symptomatic cases over a certain period with fading memory
+[8] Sun et al. (2016) - Pattern transitions in spatial epidemics: Mechanisms and emergent properties
+[9] klm
