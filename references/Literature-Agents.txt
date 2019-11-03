@@ -21,4 +21,9 @@
 - SIR-model, but with infectious as symptomatic/ asymptomatic and similar for recovered; S&I adpot normal or altered (reduction of infectious contacts) behavior
 - Perceived prevalence modeled according to symptomatic cases over a certain period with fading memory
 [8] Sun et al. (2016) - Pattern transitions in spatial epidemics: Mechanisms and emergent properties
+- Spatial dependency of epidemic spread: non-negligible, leads to richer static solutions and dynamic behavior in comparison with time only dependent models (i.e. characterized by the reproduction number)
+- Individual agent states and transitions: analogous to time only dependent models (SI/SIS/SIR/SIRS/SEIRS)
+- Stationary (steady state) and spatio-temporal (transient, sustained) patterns arise in Reaction-Diffusion PDE and CA (main parameters: force of infection / contact rate B, infection period tau_I, recovery period tau_r, death rate d, noise terms eta_i)
+- Main mechanisms responsible for pattern transitions: seasonality (sinusoidal B), spatial heterogenity and demographic/environmental stochasticity.
+- Behavioral response: affects epidemic spread mainly through vaccination and intermitent social distancing (both of them depend in turn on disease awareness). Warning: models become complex and difficult to validate.
 [9] klm
