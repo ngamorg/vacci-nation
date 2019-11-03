@@ -10,8 +10,9 @@ Maybe we can combine a few of the above features with:
 - Social Planner: Penalties for not-vaccinating and re-distribution of these incomes
 
 
-
+----------
 Notes on disease-modeling (type of disease, mathematical model, network, etc.): // as found in the literature
 - SIR reaction-diffusion model: Smallpox, mumps (Sun et al. (2016) and included references) 
 - Diseases with spatial-temporal patterns: measles, hantavirus, influenza, chronic hepatitis C (Sun et al. (2016))
 - Seasonality and noise: e.g. childhood diseases (varying contact rate, e.g. school terms), 'winter' diseases, 
+- Multiscale oscillations in patterns of incidence characteristics driven by social learning: childhood diseases, rotavirus, camplyobacter, cancers (Keane (2016))
