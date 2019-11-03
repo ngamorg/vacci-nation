@@ -22,8 +22,16 @@
 - Perceived prevalence modeled according to symptomatic cases over a certain period with fading memory
 [8] Sun et al. (2016) - Pattern transitions in spatial epidemics: Mechanisms and emergent properties
 - Spatial dependency of epidemic spread: non-negligible, leads to richer static solutions and dynamic behavior in comparison with time only dependent models (i.e. characterized by the reproduction number)
-- Individual agent states and transitions: analogous to time only dependent models (SI/SIS/SIR/SIRS/SEIRS)
+- Individual agent states and transitions: analogous to time only dependent "compartmental" models (SI/SIS/SIR/SIRS/SEIRS)
 - Stationary (steady state) and spatio-temporal (transient, sustained) patterns arise in Reaction-Diffusion PDE and CA (main parameters: force of infection / contact rate B, infection period tau_I, recovery period tau_r, death rate d, noise terms eta_i)
-- Main mechanisms responsible for pattern transitions: seasonality (sinusoidal B), spatial heterogenity and demographic/environmental stochasticity.
+- Main mechanisms responsible for pattern transitions: seasonal forcing (sinusoidal B), spatial heterogeneity and demographic/environmental stochasticity.
 - Behavioral response: affects epidemic spread mainly through vaccination and intermitent social distancing (both of them depend in turn on disease awareness). Warning: models become complex and difficult to validate.
 [9] klm
+[10] Bhattacharyya, Bauch (2012) - Evolutionary Game Theory and Social Learning Can Determine How Vaccine Scares Unfold
+- Behavioral model based on a single strategy ("vaccinator" or "not vaccinator") coupled to a SIR compartmental model to capture disease transmision, fitted against historical data from the UK's whole cell pertursis and measles–mumps–rubella vaccine scares of the 1970s and 1990s, respectively
+- Main behavioral parameters: ratio of penalty to vaccinate to the product of the penalty of infection times perceived probability of being infected (omega), number of case notifications or incidence (L or I). A time-dependent omega captures social learning (higher values during vaccine scare) and notifications/incidence captures feedback (higher incidence leads to higher vaccination)
+[11] Bauch, Earn (2004) - Vaccination and the theory of games
+- Game-theoretic analysis of the (binary) vaccination strategy coupled to a SIR compartmental model to capture probability of infection (pi_p)
+- Maximization of expected payoff guaranteed by switching/not switching to the opposite strategy, depending on the sign of DeltaE = E_vacc - E_not_vacc
+- Main parameters: relative risk of vaccination to infection (r), probability of getting infected for a given vaccination coverage p (pi_p), reproductive ratio (R_0)
+- Main result: if R_0 > 1, for any r > 0 ==> P(vacc) < P_critical for erradication ("free riding" of unvaccinated individuals on the vaccinated population)
