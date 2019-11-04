@@ -52,4 +52,5 @@
     > Vital dynamics and age structures which allow for different vaccination strategies
     > Spatiotemporal model
     (Own suggestion) > Game-theoretical model for vaccination-decision 
-   
+[13] Liu et al. (2012) - Epidemiological game-theory dynamics of chickenpox vaccination in the USA and Israel
+- Age-structured model of chickenpox transmission and vaccination - juveniles and adults 
