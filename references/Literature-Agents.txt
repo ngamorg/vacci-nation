@@ -28,7 +28,9 @@
 - Behavioral response: affects epidemic spread mainly through vaccination and intermitent social distancing (both of them depend in turn on disease awareness). Warning: models become complex and difficult to validate.
 [9] Keane (2016) - Chaos in collective health: Fractal dynamics of social learning
 - Social learning game: Individuals adopt highest payoff strategies from their neighbourhood (self included; lattice, small world, etc.)
-- Health and local health both as sources of utility
+- Individual earns benefit from own health and from amount of healthy neighbors
+- Can prevent spread of disease by protectice action at cost c times amount of neighbors against whom to protect
+- Social norm compliance in form of cost reduction if both neighbors play protection strategy
 - SIRS-model and evolutionary spatial game
 - Findings: self-similarity coefficient closely corresponds to the level of protection <-> protecting collectives form when spreading disease is present locally
 [10] Bhattacharyya, Bauch (2012) - Evolutionary Game Theory and Social Learning Can Determine How Vaccine Scares Unfold
