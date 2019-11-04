@@ -41,3 +41,15 @@
 - Maximization of expected payoff guaranteed by switching/not switching to the opposite strategy, depending on the sign of DeltaE = E_vacc - E_not_vacc
 - Main parameters: relative risk of vaccination to infection (r), probability of getting infected for a given vaccination coverage p (pi_p), reproductive ratio (R_0)
 - Main result: if R_0 > 1, for any r > 0 ==> P(vacc) < P_critical for erradication ("free riding" of unvaccinated individuals on the vaccinated population)
+[12] Corberán-Vallet et al.(2018) - Modeling Chickenpox Dynamics with a Discrete Time Bayesian Stochastic Compartmental Model
+- SEIR-model for chickenpox transmission
+- Probability of infection: Heterogeneous mixing of individuals in the population (mixing parameter alpha) and inherent stochasticity in the transmission of the disease (time-varying)
+- Seasonality with sin-cosine waves in the modeling of the transmission rate
+- Incubation period of two weeks, infectious for one week 
+- Including birth rate, but population stays constant
+- Vaccine coverage is constant and just derived from the dataset (annual vaccination coverage)
+- Suggestions for further studies:
+    > Vital dynamics and age structures which allow for different vaccination strategies
+    > Spatiotemporal model
+    (Own suggestion) > Game-theoretical model for vaccination-decision 
+   
