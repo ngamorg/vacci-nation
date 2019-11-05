@@ -60,3 +60,8 @@
 - Derivation of the SIR-dynamics and steady state conditions
 - Modelling of the social planner's problem for maximizing social welfare
 - Vaccination game and equilibrium analysis in pure- and mixed-strategies
+[16] Shi et al. (2017) - Voluntary Vaccination through Self-organizing Behaviors on Locally-mixed Social Networks
+- Social contact network as a 'network of networks': individuals form together with their neighbors a locally-mixed group - groups are homogeneously mixed and agents possess complete information
+- SIR-model and individuals play mixed strategies in well-mixed environments
+- Chosen networks: random-regular, small-worlds and scale-free
+- Simulation: (1) vaccination strategies randomly assigned (2) interaction in local environment leads to adjustments in strategy 
