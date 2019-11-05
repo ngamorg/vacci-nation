@@ -54,3 +54,5 @@
     (Own suggestion) > Game-theoretical model for vaccination-decision 
 [13] Liu et al. (2012) - Epidemiological game-theory dynamics of chickenpox vaccination in the USA and Israel
 - Age-structured model of chickenpox transmission and vaccination - juveniles and adults 
+[14] Upadhyay et al. (2019) - Dynamics of an SEIR epidemic model with nonlinear incidence and treatment rates
+- Thorough mathematical analysis of an SEIR-model with Crowley-Martin type incidence rate (predator-prey) and Holling type II and III treatment rates 
