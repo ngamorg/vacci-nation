@@ -65,3 +65,8 @@
 - SIR-model and individuals play mixed strategies in well-mixed environments
 - Chosen networks: random-regular, small-worlds and scale-free
 - Simulation: (1) vaccination strategies randomly assigned (2) interaction in local environment leads to adjustments in strategy 
+[17] Fukuda, Tanimoto (2016) - Effects of stubborn decision-makers on vaccination and disease propagation in social networks
+- Stubborn vaccinated and unvaccinated individuals (i.e., ‘zealots’) affect individual-level vaccination behaviour and the spread of infectious disease within a social network
+- SIR-model with flu-like infection (seasonality) and periodic adaption of strategies
+- Strategy adaption: individual randomly chooses a neighbor and payoffs are pairwise compared (kappa: selection pressure)
+- Networks: (1) square lattice with von Neumann neighbourhood (2) Barabasi-Albert scale-free
