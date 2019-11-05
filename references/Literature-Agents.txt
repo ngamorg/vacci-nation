@@ -56,3 +56,7 @@
 - Age-structured model of chickenpox transmission and vaccination - juveniles and adults 
 [14] Upadhyay et al. (2019) - Dynamics of an SEIR epidemic model with nonlinear incidence and treatment rates
 - Thorough mathematical analysis of an SEIR-model with Crowley-Martin type incidence rate (predator-prey) and Holling type II and III treatment rates 
+[15] Lim, Zhang (2018) - Herd Immunity and a Vaccination Game
+- Derivation of the SIR-dynamics and steady state conditions
+- Modelling of the social planner's problem for maximizing social welfare
+- Vaccination game and equilibrium analysis in pure- and mixed-strategies
