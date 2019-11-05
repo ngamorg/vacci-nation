@@ -70,3 +70,5 @@
 - SIR-model with flu-like infection (seasonality) and periodic adaption of strategies
 - Strategy adaption: individual randomly chooses a neighbor and payoffs are pairwise compared (kappa: selection pressure)
 - Networks: (1) square lattice with von Neumann neighbourhood (2) Barabasi-Albert scale-free
+[18] Liu et al.(2012) - Impact of committed individuals on vaccination behavior
+- Compare [17]
