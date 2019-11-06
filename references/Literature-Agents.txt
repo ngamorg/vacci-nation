@@ -1,3 +1,5 @@
+Especially: [4] , [5] , [7] , [9] , [10] , [12] , [21]
+
 [1] Francis (1997) - Dynamic epidemiology and the market for vaccinations
 [2] Manfredi et. al. (2010) - Optimal vaccination choice, vaccination games, and rational exemption: An appraisal 
 [3] Ehrhardt et al. (2019)- SIR-based mathematical modeling
@@ -8,7 +10,6 @@
 [5] Shim et al. (2012) - A game dynamic model for vaccine skeptics and vaccine believers: Measles as an example
   - Game-theoretic model of measles transmission: Analysing the effect of perceived vaccine risks on uptake levels
   - Examination of vaccine choice in a two-group population: vaccine sceptics vs. believers - difference perception of vaccine and infection risks
-  -
 [6] Bhattacharyya, Bauch (2011) - “Wait and see” vaccinating behaviour during a pandemic: A game theoretic analysis
 - Population game with "wait and see" strategy for a new vaccination 
 - Single outbreak of a pandemic influenza: weekly time-steps regarding the onset of immunity/ infection
