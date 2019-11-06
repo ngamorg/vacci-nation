@@ -72,3 +72,5 @@
 - Networks: (1) square lattice with von Neumann neighbourhood (2) Barabasi-Albert scale-free
 [18] Liu et al.(2012) - Impact of committed individuals on vaccination behavior
 - Compare [17]
+[19] Webb (1981) - A Reaction-Diffusion Model for a Deterministic Diffusive Epidemic
+- Shows the ssexistence of a solution in the spatial inhomogeneous case for the SIR-model, as well as asymptotic behavior
