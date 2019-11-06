@@ -74,3 +74,6 @@
 - Compare [17]
 [19] Webb (1981) - A Reaction-Diffusion Model for a Deterministic Diffusive Epidemic
 - Shows the ssexistence of a solution in the spatial inhomogeneous case for the SIR-model, as well as asymptotic behavior
+[20] Chinviriyasit (2010) - Numerical modelling of an SIR epidemic model with diffusion
+- SIR-reaction-diffusion model (whooping cough) for the geopraphic spread of the disease in a population without vaccination
+- model allows for spatial propagation of the individuals via diffusion coefficients
