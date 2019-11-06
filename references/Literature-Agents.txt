@@ -77,3 +77,6 @@
 [20] Chinviriyasit (2010) - Numerical modelling of an SIR epidemic model with diffusion
 - SIR-reaction-diffusion model (whooping cough) for the geopraphic spread of the disease in a population without vaccination
 - model allows for spatial propagation of the individuals via diffusion coefficients
+[21] Samsuzzoha et al. (2012) - A numerical study on influenza epidemic model with vaccination and diffusion
+- SEIRS model with 5 subgroups, including vaccinators - Model w/ and w/o diffusion terms
+- Vital dynamics, induced mortality rate and immunity loss included
