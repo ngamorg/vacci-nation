@@ -34,15 +34,10 @@ world = None
 agents = None
 
 
-def update(n):
-    print(n)
-    apply_vaccination(agents, world)
-    eval_infection()
-    apply_recuperation(agents)
-    apply_infection()
-
-
 def apply_recuperation():
+    """
+    look at every infected agent and heal them with probability recuperation_prob
+    """
     for a in agents:
         if a.infected == 1:
             r = random.random()
@@ -51,6 +46,11 @@ def apply_recuperation():
 
 
 def eval_infection():
+    """
+    iterate through all agents and if they are infected try to infect their neighbours (only if not infected)
+    depending if their neighbour is in the same group or not different probs apply, i.e avg_inner_contacts
+    and avg_outer_contacts
+    """
     for a in agents:
         if a.infected == 1:
             for neighbour in world.network.neighbors(a.id):
@@ -65,9 +65,10 @@ def eval_infection():
                             agents[neighbour].infected_n = 1
 
 
-
-
 def apply_infection():
+    """
+    iterates through all agents and if a.infected == 1 clear it and set a.infected = 1
+    """
     for a in agents:
         if a.infected_n == 1:
             a.infected_n = 0
@@ -75,6 +76,9 @@ def apply_infection():
 
 
 def apply_vaccination():
+    """
+    TO DO
+    """
     pass
 
 
@@ -82,6 +86,7 @@ def create_agents(world):
     """
     create agents
     """
+    global num_nodes
     num_nodes = len(world.network.nodes)
     num_groups = len(world.groups)
     agents = []
@@ -91,6 +96,9 @@ def create_agents(world):
 
 
 def infected_global_percentage(agents):
+    """
+    returns #infected agents / #agents
+    """
     infected = 0
     total = 0.0
 
@@ -101,12 +109,16 @@ def infected_global_percentage(agents):
 
 
 def infected_local_percentages(agents, world, depth):
+    """
+    returns #infected agents at most depth nodes away / #agents at most depth away
+    """
+
     pass
 
 
 def infect_population(agents, num_nodes):
     """
-    assign initial infected population
+    assign initial infected population with probability  initial_infected_percentage
     """
     for i in range(0, num_nodes):
         r = random.random()
@@ -117,6 +129,9 @@ def infect_population(agents, num_nodes):
 
 
 def generate_infected_list(agents):
+    """
+    iterate through all agends and generate a list infected where agent[i].infected == 1 <=> infected[i] == 1, else 0
+    """
     infected = []
 
     for i in range(0, len(agents)):
@@ -126,11 +141,12 @@ def generate_infected_list(agents):
 
 def draw_network(world, color, pos):
     """
+    draw the current network to a plot with node and edge positions pos and colored with rule color, then show it.
+    """
     for group in world.groups:
         nx.draw(group, pos)
         plt.show()
         print(group.nodes)
-    """
 
     nx.draw_networkx_edges(world.network, pos, edgelist=world.network.edges)
     nx.draw_networkx_nodes(world.network, pos, nodelist=world.network, node_color=color)
@@ -154,17 +170,27 @@ pos = nx.spring_layout(world.network)
 
 
 def time_stamp(n):
+    """
+    for FuncAnimation, applies a timestamp of the simulation. if new season starts, apply vaccination
+    """
     print(n)
     if n % num_tick_per_season == 0:
         apply_vaccination()
     eval_infection()
     apply_recuperation()
     apply_infection()
+    fig.clf()
     edges = nx.draw_networkx_edges(world.network, pos, edgelist=world.network.edges)
-    nodes = nx.draw_networkx_nodes(world.network, pos, nodelist=world.network, node_color=generate_infected_list(agents))
+    nodes = nx.draw_networkx_nodes(world.network, pos, nodelist=world.network,
+                                   node_color=generate_infected_list(agents))
     return nodes
 
-
-ani = FuncAnimation(fig,  time_stamp, frames=100, interval=100)
+"""
+start animation and save it as netowrk.mp4, then display the network with respect to groupss
+"""
+ani = FuncAnimation(fig, time_stamp, frames=500, interval=100)
 ani.save('network.mp4', fps=4, extra_args=['-vcodec', 'libx264'])
 plt.show()
+plt.close()
+
+draw_network(world, world.group_colors, pos)
