@@ -17,3 +17,5 @@ Notes on disease-modeling (type of disease, mathematical model, network, etc.): 
 - Seasonality and noise: e.g. childhood diseases (varying contact rate, e.g. school terms), influenza, RSV, rotavirus, varicella (Acedo et al. 2016) 
 - Multiscale oscillations in patterns of incidence characteristics driven by social learning: childhood diseases, rotavirus, camplyobacter, cancers (Keane (2016))
 - SEIR-model: measles, flu, pox, dengue (Upadhyay et al. (2019))
+
+- Incubation time: Krickeberg et al. - Epidemiology - p.39ff
