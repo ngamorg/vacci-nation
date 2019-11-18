@@ -102,9 +102,9 @@ class agent(object):
 
         # : neigborhood[:] is an array containing the health states ('SUSCEPTIBLE', 'INFECTED',
         # 'RECOVERED', 'VACCINATED') of the neighbors of self
-        neigborhood = []
-        for neigh in enumerate(environment.edges(self.gid)):
-            neigborhood.append(environment.nodes[neigh[0]]['data']._health)
+        neighborhood = []
+        for i, neighbor in enumerate(environment.edges(self._id)):
+            neighborhood.append(environment.nodes[neighbor[1]]['data'].TellHealthStatus())
         
         # Get relative frequency of infections
         incidence = neighborhood.count(Health.INFECTED) / len(neighborhood)
@@ -115,11 +115,13 @@ class agent(object):
     def Act(self, environment):
         '''
 
-        When an agent vaccinates it transitions according to the rule: s -> v or r -> v.
+        When an agent vaccinates it transitions according to the rule: S -> V (recovered agents
+        are assumed to become fully immunized, so there is no increased payoff on vaccination).
         The agent is assumed to be a rational utility maximizer with only one possible decision
-        per action, that is, to vaccinate with probability pvacc. The utility function
-        takes the following form, following the Bellman equation for a discrete-time Markov
-        process:
+        per action, that is, to vaccinate with probability *pvacc* every *T* time steps if it
+        is currently in the susceptible state *S* (otherwise no decision is taken).
+        The utility function takes the following form, following the Bellman equation for a
+        discrete-time Markov process:
 
         U_k(x) = sum_{t = 0}^{t = T} x_k(t) * f_k(t) / (1 + r)^t                                             (1)
 
@@ -140,7 +142,7 @@ class agent(object):
 
         Additionally, the evolution of the system is given by a stochastic matrix Q:
 
-        x(t_{n + 1}) = Q_k * x(t_{n})                                                                        (2)
+        x_k(t_{n + 1}) = Q_k * x_k(t_{n})                                                                        (2)
             
         Q_k = [ p_k(S -> S), p_k(I -> S), p_k(R -> S), p_k(V -> S) ]
               [ p_k(S -> I), ...                     , p_k(V -> I) ]
@@ -152,7 +154,7 @@ class agent(object):
         Q_k = [ 1 - lambda_k,           0, 0, 0 ]
               [ lambda_k    , 1 - gamma_k, 0, 0 ]
               [            0,     gamma_k, 1, 0 ]
-              [            0,           0, 0, 0 ]
+              [            0,           0, 0, 1 ]
             
         Where:
             lambda_k: probability of infection for a susceptible agent k (estimated using
@@ -169,7 +171,7 @@ class agent(object):
 
         So that:
             
-        U_k(x) = ( f_k(t = 0) + P_k^-1 * sum_{t = 1}^{t = T} (L_k / (1 + r))^t * f_k(t) ) * P_k * x_k(0)     (4)
+        U_k(x) = ( f_k(t = 0) + P_k^-1 * sum_{t = 1}^{t = T} (L_k / (1 + r))^t * P_k * f_k(t) ) * x_k(0)     (4)
 
         Finally, performing the required computations:
 
@@ -225,7 +227,7 @@ class agent(object):
         p =  np.random.uniform(0.0,1.0)
         if pvacc >= p:
             self._health = Health.VACCINATED
-
+          
     def Update(self, health):
         # Assume simulation time-step equal to 1 day
         self._age = self._age + 1 / 365
@@ -233,13 +235,29 @@ class agent(object):
         # next state health state
         self._health = health
     
-    def PrintState(self):
-        print(self._id)
-        print(self._age)
-        print(self._health)
-        print(self._group)
+    def TellHealthStatus(self):
+        return self._health
+
+    def PrintLambda(self):
+        print("The perceived probability of infection for agent", \
+            self._id, "is equal to:", self._epdmParams.lambda_k)
 
 # SANITY CHECKS
+import networkx as nx
+
+# create population
 a = agent(0, 15, Health.SUSCEPTIBLE, Group.TRUSTER)
-a.Update(Health.INFECTED)
-a.PrintState()
+b = agent(1, 24, Health.INFECTED, Group.TRUSTER)
+c =agent(2, 42, Health.SUSCEPTIBLE, Group.SKEPTICAL)
+population = [a,b,c]
+
+# create network
+g = nx.Graph()
+gcomplete = nx.complete_graph(3)
+for ag in population:
+    g.add_node(ag._id, data=ag)
+g.add_edges_from(gcomplete.edges())
+
+# look and estimate infection likelihood
+a.Look(g)
+a.PrintLambda()
