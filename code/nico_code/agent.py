@@ -1,7 +1,6 @@
 # Import libraries
 import numpy as np
 from enum import Enum
-from collections import namedtuple
 
 class Health(Enum):
     SUSCEPTIBLE = 0
@@ -13,23 +12,15 @@ class Group(Enum):
     SKEPTICAL = 0
     TRUSTER = 1
  
-class EpidemicParams():
-    '''
-    SUMMARY OF STATIC ATTRIBUTES
-    ----------------------------
-    * r: discount rate
-        quantifies the time preference of present over future utility
-    * T: decision time window
-        the decision to either vaccinate or not is taken rationally,
-        by maximizing the expected utility during a time span T into
-        the future
-    '''
-
-    def __init__(self, lambda_k, gamma_k, Ci_k, Cv_k):
-        self.lambda_k = lambda_k
-        self.gamma_k = gamma_k
-        self.Ci_k = Ci_k
-        self.Cv_k = Cv_k
+class GroupBehavior():
+    def __init__(self, type):
+        self.type = type
+        if type == Group.SKEPTICAL:
+            self.Ci = 1.0
+            self.Cv = 2.0
+        elif type == Group.TRUSTER:
+            self.Ci = 1.0
+            self.Cv = 1.0
         
 class agent(object):
     """
@@ -39,38 +30,47 @@ class agent(object):
     # Static members
     r = 0.01
     T = 30 # (monthly)
+    beta = 0.8 # 0.0 <= beta <= 1.0
 
     def __init__(self, id, age, health, group):
                 
         '''
+        SUMMARY OF STATIC ATTRIBUTES
+        ----------------------------
+        * r: discount rate
+            quantifies the time preference of present over future utility
+        * T: decision time window
+            the decision to either vaccinate or not is taken rationally,
+            by maximizing the expected utility during a time span T into
+            the future
+        * beta: conditional probability of infection
+            the agent's estimate of the probability of infection P(S->I)
+            requires both knowledge of the local prevalence of the disease
+            (proxy for the probability of interacting with an infected agent)
+            plus a conditional probability of getting infected given that an
+            interaction with an infected agent occurred
+
         * SUMMARY OF AGENT STATE ATTRIBUTES
         -----------------------------------
         * id: agent's ID in the population (integer)
         * age: agent's age (float, years)
         * health: agent's health state (enum class, Health)
-            s (susceptible)
-            i (infected)
-            r (recovered)
-            v (vaccinated) 
+            S (susceptible)
+            I (infected)
+            R (recovered)
+            V (vaccinated) 
         * group: agent's social aggregate (enum class, Group)
             the group is used as a category key for behavioral
             properties affecting the agent's decision process
-
-        * SUMMARY OF EPIDEMIC PARAMETERS
-        --------------------------------
-        * lambda: (perceived) probability of infection
-            an agent samples its neigborhood in order to estimate
+        * lambda_k: (perceived) probability of infection / P(S -> I)
+            a susceptible agent samples its neighborhood in order to estimate
             the relative frequency of infected individuals, and
             mutiplies it by the conditional probability of getting
             infected given a local prevalence
-        * gamma: probabiity of recovery
-            might it be a function of the agent's age?
-        * Ci: cost of infection
-            might it be a function of the agent's age?
-        * Cv: cost of vaccination
-            the total vaccination cost is equal to its market/acquisition
-            cost (objective) plus the subjective cost associated with given
-            beliefs
+        * gamma_k: (perceived) probability of recovery / P(I -> R)
+            an agent estimates its probability of recovery given that
+            it is infected, wich will vary depending on age (younger
+            and older agents are less likely to recover)
         '''
 
         # Initialize agent state
@@ -78,19 +78,8 @@ class agent(object):
         self._age = age
         self._health = health
         self._group = group;
-
-        # Initialize epidemic parameters, depending on group membership
-        self._epdmParams = EpidemicParams
-        if self._group == Group.SKEPTICAL:
-            self._epdmParams.lambda_k = 0.0
-            self._epdmParams.gamma_k = 0.0
-            self._epdmParams.Ci_k = 0.0
-            self._epdmParams.Cv_k = 0.0
-        elif self._group == Group.TRUSTER:
-            self._epdmParams.lambda_k = 0.0
-            self._epdmParams.gamma_k = 0.0
-            self._epdmParams.Ci_k = 0.0
-            self._epdmParams.Cv_k = 0.0
+        self._lambda_k = 0.0;
+        self._gamma_k = self.EstimateGamma();
 
         super().__init__()    
             
@@ -100,7 +89,7 @@ class agent(object):
         calculates the local incidence of the disease and updates the probability of infection
         """
 
-        # : neigborhood[:] is an array containing the health states ('SUSCEPTIBLE', 'INFECTED',
+        # : neighborhood[:] is an array containing the health states ('SUSCEPTIBLE', 'INFECTED',
         # 'RECOVERED', 'VACCINATED') of the neighbors of self
         neighborhood = []
         for i, neighbor in enumerate(environment.edges(self._id)):
@@ -110,9 +99,9 @@ class agent(object):
         incidence = neighborhood.count(Health.INFECTED) / len(neighborhood)
 
         # Update probability of infection
-        self._epdmParams.lambda_k = incidence;
+        self._lambda_k = self.EstimateLambda(incidence)
 
-    def Act(self, environment):
+    def Act(self, groups, environment):
         '''
 
         When an agent vaccinates it transitions according to the rule: S -> V (recovered agents
@@ -203,10 +192,12 @@ class agent(object):
         # Compute Cnotv_k
         r = self.r
         T = self.T
-        lambda_k = self._epdmParams.lambda_k
-        gamma_k = self._epdmParams.lambda_k
-        Ci_k = self._epdmParams.Ci_k
-        Cv_k = self._epdmParams.Cv_k
+        lambda_k = self._lambda_k
+        gamma_k = self._gamma_k
+        for i in range(0, len(groups)):
+            if (self._group == groups[i].type):
+                Ci_k = groups[i].Ci
+                Cv_k = groups[i].Cv
             
         sum = [ 0.0, 0.0 ]
         for t in range(1, T + 1):
@@ -235,15 +226,40 @@ class agent(object):
         # next state health state
         self._health = health
     
+    def EstimateLambda(self, incidence):
+        '''
+        Local estimate of P(S->I), based on the relative frequency
+        of infected individuals surrounding the agent and the conditional
+        probability of getting infected given a local prevalence
+        '''
+        return incidence * agent.beta
+
+    def EstimateGamma(self):
+        '''
+        Local estimate of P(I->R), based on the agent's health. Assumes
+        0 < age < 100 years, and maximum probability of recovery at an
+        age = 25 years
+        '''
+        maxGamma = 0.1
+        if(self._age < 25.0):
+            return maxGamma * (1.0 - abs(self._age - 25.0) / 25.0)
+        else:
+            return maxGamma * (1.0 - abs(self._age - 25.0) / (100 - 25.0))
+
     def TellHealthStatus(self):
         return self._health
 
     def PrintLambda(self):
         print("The perceived probability of infection for agent", \
-            self._id, "is equal to:", self._epdmParams.lambda_k)
+            self._id, "is equal to:", self._lambda_k)
 
 # SANITY CHECKS
 import networkx as nx
+
+# create groups
+greens = GroupBehavior(Group.SKEPTICAL)
+yellows = GroupBehavior(Group.TRUSTER)
+groups = [greens, yellows]
 
 # create population
 a = agent(0, 15, Health.SUSCEPTIBLE, Group.TRUSTER)
@@ -258,6 +274,8 @@ for ag in population:
     g.add_node(ag._id, data=ag)
 g.add_edges_from(gcomplete.edges())
 
-# look and estimate infection likelihood
+# look and estimate infection likelihood, and tell health status
 a.Look(g)
 a.PrintLambda()
+a.Act(groups, g)
+print("Agent\'s", a._id, "health status is:", a.TellHealthStatus())
