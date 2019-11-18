@@ -1,6 +1,9 @@
 Especially: [4] , [5] , [7] , [9] , [10] , [12] , [21]
 
 [1] Francis (1997) - Dynamic epidemiology and the market for vaccinations
+  - Static and dynamic models of the market for vaccinations
+  - Static population (different costs of vaccination) The market for vaccination (given homogeneous individuals) does not yield results that are socially optimal, but still better or equal to a mandatory vaccination policy 
+  - 
 [2] Manfredi et. al. (2010) - Optimal vaccination choice, vaccination games, and rational exemption: An appraisal 
 [3] Ehrhardt et al. (2019)- SIR-based mathematical modeling
 [4] Poletti et al. (2011) - The Effect of Risk Perception on the 2009 H1N1 Pandemic Influenza Dynamics
