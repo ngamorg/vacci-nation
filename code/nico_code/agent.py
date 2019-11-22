@@ -118,8 +118,8 @@ class agent(object):
             x_k(t) : health state vector of agent k
             x_k(t = 0) = [ 1 - pvacc, 0, 0, pvacc ] (initial health state vector of agent k)
             f_k(t) : payoff vector of agent k
-            f_k(t = 0) = [ 0, 0, 0, -Cv_k ]
-            f_k(t > 0) = [ 0, -Ci_k, 0, 0 ]
+            f_k(t = 0) = [ 0, 0, 0, -Cv_k ]         # instantaneous payoff gains associated with each transition
+            f_k(t > 0) = [ 0, -Ci_k, 0, 0 ]         # gains per unit of time for residents of each state
             Cv_k : cost of vaccination for agent k
             Ci_k : cost of infection for agent k
             r : discount rate
