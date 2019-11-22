@@ -192,7 +192,7 @@ class agent(object):
         # Compute Cnotv_k
         r = self.r
         T = self.T
-        lambda_k = self._lambda_k
+        lambda_k = self._lambda_k           # review of lambda required -> 1 - beta^(infected neighbors)
         gamma_k = self._gamma_k
         for i in range(0, len(groups)):
             if (self._group == groups[i].type):
