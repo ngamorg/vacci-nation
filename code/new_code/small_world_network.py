@@ -41,6 +41,14 @@ class SmallWorldNetwork:
                     self.network.add_edge(node_i, node_j)
 
     def combine_groups(self, num_groups):
+
+        colors = [
+            {'r': 255, 'g': 0, 'b': 0, 'a': 1.0},
+            {'r': 0, 'g': 255, 'b': 0, 'a': 1.0},
+            {'r': 0, 'g': 0, 'b': 255, 'a': 1.0},
+            {'r': 122, 'g': 0, 'b': 122, 'a': 1.0},
+        ]
+
         """
         Add all the nodes and edges of every group to a single graph. groups_stranslation will contain the translations
         that are needed to convert from nodes of group i to the whole network. Also set the group_colors st.
@@ -56,7 +64,7 @@ class SmallWorldNetwork:
                 self.network.add_node(node + k)
                 new_group.add_node(node + k)
                 self.group_colors.append(i)
-                self.network.nodes[node+k]['viz'] = {'color': {'r': 255*i, 'g': 255*(1-i), 'b': 0, 'a': 1.0}}
+                self.network.nodes[node+k]['viz'] = {'color': colors[i]}
             for edge in group.edges:
                 self.network.add_edge(edge[0] + k, edge[1] + k)
                 new_group.add_edge(edge[0] + k, edge[1] + k)

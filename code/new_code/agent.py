@@ -20,9 +20,9 @@ class GroupBehavior():
         self.type = type
         if type == Group.SKEPTICAL:
             self.Ci = 1.0
-            self.Cv = 2.0
+            self.Cv = 1.0
         elif type == Group.TRUSTER:
-            self.Ci = 1.0
+            self.Ci = 2.0
             self.Cv = 1.0
 
 
@@ -33,8 +33,15 @@ class Agent(object):
 
     # Static members
     r = 0.01
+
+    # min 3-4
     T = 30  # (monthly)
     beta = 0.1  # 0.0 <= beta <= 1.0
+
+    num_vac = 0
+    num_sus = 0
+    num_inf = 0
+    num_rec = 0
 
     def __init__(self, id, age, health, group):
 
@@ -81,15 +88,20 @@ class Agent(object):
         self._id = id
         self._age = age
         self._health = health
-        self._group = group;
-        self._lambda_k = 0.0;
-        self._gamma_k = self.estimate_gamma();
+        self._group = group
+        self._lambda_k = 0.0
+        self._gamma_k = self.estimate_gamma()
 
         self._health_next = None
 
         super().__init__()
 
     def run(self, group_behaviours, neighbors, agents):
+        if self._health == Health.INFECTED:
+            if np.random.uniform(0.0, 1.0) < self._gamma_k:
+                self._health = Health.RECOVERED
+                return
+
         if not self._health == Health.SUSCEPTIBLE:
             return
 
@@ -102,7 +114,7 @@ class Agent(object):
 
         # Get vaccinated? (Decide once in 30 days)
         dec = np.random.uniform(0.0, 1.0)
-        if dec < 1/30 and not self._health_next == Health.INFECTED:
+        if dec < 1/self.T and not self._health_next == Health.INFECTED:
             self.act(group_behaviours, neighbors, agents)
 
     def look(self, neighbors, agents):
@@ -211,6 +223,7 @@ class Agent(object):
         # self.look(neighbors)
 
         # Compute Cnotv_k
+
         r = self.r
         T = self.T
 
@@ -222,11 +235,10 @@ class Agent(object):
                 Ci_k = group_behaviours[i].Ci
                 Cv_k = group_behaviours[i].Cv
 
-
         sum = [0.0, 0.0]
         for t in range(1, T + 1):
-            sum[0] = ((1 - lambda_k) / (1 + r)) ** t
-            sum[1] = ((1 - gamma_k) / (1 + r)) ** t
+            sum[0] += ((1 - lambda_k) / (1 + r)) ** t
+            sum[1] += ((1 - gamma_k) / (1 + r)) ** t
 
         Cnotv_k = Ci_k * (lambda_k / (gamma_k - lambda_k)) * (sum[0] - sum[1])
 
@@ -268,14 +280,10 @@ class Agent(object):
         age = 25 years
         '''
         maxGamma = 0.1
-        if (self._age < 25.0):
+        if self._age < 25.0:
             return maxGamma * (1.0 - abs(self._age - 25.0) / 25.0)
         else:
             return maxGamma * (1.0 - abs(self._age - 25.0) / (100 - 25.0))
 
     def get_health_status(self):
         return self._health
-
-    def PrintLambda(self):
-        print("The perceived probability of infection for agent", \
-              self._id, "is equal to:", self._lambda_k)
