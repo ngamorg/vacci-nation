@@ -1,0 +1,151 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                
+\geometry{a4paper}                   
+
+\usepackage[latin1]{inputenc}
+
+\usepackage[colorlinks, linkcolor=blue, citecolor=blue, filecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{hyperref}
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage[comma]{natbib}
+\usepackage{amssymb, amsmath}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{Epidemiology \& Immunization}
+\author{Julius Siebenaller, Jannes Hühnerbein, Benjamin Gundersen, Nicolas Antunes Morgado}
+\date{November 2019} 
+
+\begin{document}
+
+
+
+\section{Description of the Model}
+
+
+General:
+
+Working with an SIVR-model such that the final states are either vaccinated or recovered % equations
+
+
+Agent: belongs to a certain group, age %depends on whether or not we find interesting parameters
+		% maybe different time horizons
+Group-beliefs that are relevant when it comes to assessing the cost of infection and vaccination. Roughly twice as high in Group xyz %bounded rationality
+
+Time-horizon: differs wrt. forecasting and assessing %reversed correlation
+
+
+
+Small-network because of mimicking an actual population structure 
+rational agent with complete information 
+% with references to justify Barabasi-network
+
+
+We assume rational agents possessing complete information but work with a limited time-horizon regarding the vaccination decision. \\
+The rational agent and complete information assumption is relevant for the calculation of the infection probability in each decision-round
+
+
+
+
+SUMMARY OF STATIC ATTRIBUTES
+       % ----------------------------
+        - r: discount rate
+            quantifies the time preference of present over future utility
+        - T: decision time window
+            the decision to either vaccinate or not is taken rationally,
+            by maximizing the expected utility during a time span T into
+            the future
+        - beta: conditional probability of infection
+            the agent's estimate of the probability of infection P(S->I)
+            requires both knowledge of the local prevalence of the disease
+            (proxy for the probability of interacting with an infected agent)
+            plus a conditional probability of getting infected given that an
+            interaction with an infected agent occurred \\
+SUMMARY OF AGENT STATE ATTRIBUTES
+        % -----------------------------------
+%: agent's ID in the population (integer)
+% age: agent's age (float, years)
+%health: agent's health state (enum class, Health)
+%S (susceptible)
+% I (infected)
+% R (recovered)
+% V (vaccinated)
+group: agent's social aggregate (enum class, Group) the group is used as a category key for behavioral properties affecting the agent's decision process: \\
+\(\lambda_{k}:\) probability of infection, \(P(S->I)\). A susceptible agent samples the neighbourhood and derives the probability of infection given the edges that are connected with an infected note.\\
+\(\gamma_{k}:\) probability of recovery, \(P(I->R)\). An agent's estimation of the probability of recovering in the next time-step. %maybe dependent on age
+%lambda_k: (perceived) probability of infection / P(S -> I) a susceptible agent samples its neighborhood in order to estimate the relative frequency of infected individuals, and mutiplies it by the conditional probability of getting infected given a local prevalence
+
+%gamma_k: (perceived) probability of recovery / P(I -> R) an agent estimates its probability of recovery given that it is infected, wich will vary depending on age (younger and older agents are less likely to recover)
+
+        
+        
+When vaccinated, the agent transitions according to the rule: \(S -> V \) (recovered agents are assumed to become fully immunized, so there is no increased payoff on vaccination).
+The agent is assumed to be a rational utility maximizer with only one possible decision per action, that is, to vaccinate with probability \(pvacc_{T}\) in every time-step \(T\), if the current state is susceptible. Otherwise, infected agents recover with probability \(\gamma_{k}\) or stay in the recovered or vaccinated state.  %*pvacc* every *T* 
+% *S* (otherwise no decision is taken).
+
+The utility function takes the following form, following the Bellman equation for a discrete-time Markov process: % reference for Bellmann equation
+        % U_k(x) = sum_{t = 0}^{t = T} x_k(t) * f_k(t) / (1 + r)^t                                             (1)
+Where:
+% x_k(t) : health state vector of agent k
+% x_k(t = 0) = [ 1 - pvacc, 0, 0, pvacc ] (initial health state vector of agent k)
+% f_k(t) : payoff vector of agent k
+% f_k(t = 0) = [ 0, 0, 0, -Cv_k ]         # instantaneous payoff gains associated with each transition
+% f_k(t > 0) = [ 0, -Ci_k, 0, 0 ]         # gains per unit of time for residents of each state
+% Cv_k : cost of vaccination for agent k
+% Ci_k : cost of infection for agent k
+% r : discount rate
+% T : event duration (i.e. before a new utility estimation)
+The agent decided wether to vaccinate or not by solving the optimization problem:
+ %max pvacc {U(x)}
+Additionally, the evolution of the system is given by a stochastic matrix Q:
+% x_k(t_{n + 1}) = Q_k * x_k(t_{n})                                                                        (2)
+% Q_k = [ p_k(S -> S), p_k(I -> S), p_k(R -> S), p_k(V -> S) ]
+% [ p_k(S -> I), ...                     , p_k(V -> I) ]
+% [ ...                                   ...          ]
+% [ p_k(S -> V), ...                     , p_k(V -> V) ]
+And in particular:
+% Q_k = [ 1 - lambda_k,           0, 0, 0 ]
+% [ lambda_k    , 1 - gamma_k, 0, 0 ]
+% [            0,     gamma_k, 1, 0 ]
+%  [            0,           0, 0, 1 ]
+Where:
+%lambda_k: probability of infection for a susceptible agent k (estimated using local prevalence of infection, times some contact infection probability) gamma_k: probability of recovery of infected agent k
+Equation (1) can be rewritten using equation (2):
+% U_k(x) = ( f_k(t = 0) + sum_{t = 1}^{t = T} Q^t * f_k(t) / (1 + r)^t ) * x_k(0)                      (3)
+In order to compute the power %Q^t, 
+the matrix can be diagonalized:
+%Q_k = P_k^-1 * L_k * P_k
+So that:
+% U_k(x) = ( f_k(t = 0) + P_k^-1 * sum_{t = 1}^{t = T} (L_k / (1 + r))^t * P_k * f_k(t) ) * x_k(0)     (4)
+Finally, performing the required computations:
+% U_k(x) = -pvacc * Cv_k - (1 - pvacc) * Cnotv_k                                                       (5)
+Where:
+% Cnotv_k = Ci_k * (lambda_k / (gamma_k - lambda_k)) *
+% (sum_{t = 1}^{t = T} ((1 - lambda_k) / (1 + r)))^t - sum_{t = 1}^{t = T}((1 - gamma_k) / (1 + r))^t)
+Equation (5) is linear in pvacc, so it only has one global maximum depending on the relative cost of each decision. In particular:
+%Cv_k > Cnotv_k -> pvacc = 0 (not vaccinating is the preferred strategy)
+%Cnotv_k > Cv_k -> pvacc = 1 (vaccinating is the preferred strategy)
+%Cv_k = Cnotv_k -> 0 <= pvacc <= 1 (the agent is indiferent towards vaccinating or not)
+Ref.:
+\cite{shim2012}
+
+
+Since the agent only decides on whether or not to get vaccinated if in the susceptible state, we can reduce or shrink the matrix in size. Thus, the problem that our code is working with is the following: 
+
+
+
+NETWORK
+We decided on utilising 
+
+
+
+
+
+\end{document}  
+
+
+
+ 
