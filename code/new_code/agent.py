@@ -96,7 +96,7 @@ class Agent(object):
 
         super().__init__()
 
-    def run(self, group_behaviours, neighbors, agents):
+    def run(self, group_behaviours, neighbors, depth_neighbors, agents):
         if self._health == Health.INFECTED:
             if np.random.uniform(0.0, 1.0) < self._gamma_k:
                 self._health = Health.RECOVERED
@@ -113,6 +113,7 @@ class Agent(object):
             self._health_next = Health.INFECTED
 
         # Get vaccinated? (Decide once in 30 days)
+        self.look(depth_neighbors, agents)
         dec = np.random.uniform(0.0, 1.0)
         if dec < 1/self.T and not self._health_next == Health.INFECTED:
             self.act(group_behaviours, neighbors, agents)

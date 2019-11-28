@@ -2,10 +2,11 @@ import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+from matplotlib.lines import Line2D
+
 from small_world_network import SmallWorldNetwork
 
 from agent import Agent, Health, Group, GroupBehavior
-
 
 n = 1000
 group_percentages = [0.6, 0.4]
@@ -16,7 +17,6 @@ alpha = 0.2
 groups = [Group.TRUSTER, Group.SKEPTICAL]
 group_behaviours = [GroupBehavior(Group.TRUSTER), GroupBehavior(Group.SKEPTICAL)]
 
-
 age_mu = 40
 age_sigma = 15
 
@@ -25,11 +25,13 @@ lim_init_vacci = [0.06, 0.01]
 
 agents = list()
 
+depth = 2
+
 
 def setup():
     global agent
 
-    G = SmallWorldNetwork(n, group_percentages, alpha, k, change_edge_percentage)
+    G = SmallWorldNetwork(n, group_percentages, alpha, k, change_edge_percentage, depth)
 
     # Create Agent for every node
     for i in G.network.nodes:
@@ -53,9 +55,9 @@ def setup():
     return G
 
 
-def simulate(world : SmallWorldNetwork, group_behaviours, agents):
+def simulate(world: SmallWorldNetwork, group_behaviours, agents):
     for i in world.network.nodes:
-        agents[i].run(group_behaviours, world.network.neighbors(i), agents)
+        agents[i].run(group_behaviours, world.network.neighbors(i), world.depth_neighbors[i], agents)
 
     for i in world.network.nodes:
         agents[i].update()
@@ -100,7 +102,7 @@ def export(net, agents, v):
         for e in net.edges:
             net.edges[e]['viz'] = {'color': {'r': 220, 'g': 220, 'b': 220, 'a': 1.0}}
 
-        nx.write_gexf(net, "export/export-"+str(v)+".gexf")
+        nx.write_gexf(net, "export/export-" + str(v) + ".gexf")
 
 
 def simulate_export():
@@ -164,6 +166,19 @@ def generate_health_list(agents):
     return infected
 
 
+def health_list_to_color(health_list):
+    color_health_list = []
+    """
+    SUSCEPTIBLE <-> yellow
+    INFECTED <->  red
+    RECOVERED <-> green
+    VACCINATED <-> navy
+    """
+    colors = ["yellow", "red", "green", "navy"]
+    for i in range(0, len(health_list)):
+        color_health_list.append(colors[health_list[i]])
+    return color_health_list
+
 def split_groups(nodes, group_list, health_color):
     health_color0 = []
     health_color1 = []
@@ -171,7 +186,7 @@ def split_groups(nodes, group_list, health_color):
     nodes0 = []
     nodes1 = []
     for i in nodes:
-        if group_list[i]%2 == 0:
+        if group_list[i] % 2 == 0:
             health_color0.append(health_color[i])
             nodes0.append(i)
         else:
@@ -184,18 +199,29 @@ def split_groups(nodes, group_list, health_color):
 def time_stamp(iteration):
     print(iteration)
 
+    global fig
     simulate(world, group_behaviours, agents)
     fig.clf()
 
-    n0, n1, h0, h1  = split_groups(world.network, world.group_colors, generate_health_list(agents))
+    n0, n1, h0, h1 = split_groups(world.network, world.group_colors, generate_health_list(agents))
 
-    edges = nx.draw_networkx_edges(world.network, pos,width = 0.1, edgelist=world.network.edges)
-    
-    
-    nodes0 = nx.draw_networkx_nodes(n0, pos,node_size=7, node_shape='^',  nodelist=n0,
-                                   node_color=h0, label='Trusters')
-    nodes1 = nx.draw_networkx_nodes(n1, pos, node_size=7, nodelist=n1, node_color=h1, label='Skepticals')
-    plt.legend(scatterpoints=1) 
+    edges = nx.draw_networkx_edges(world.network, pos, width=0.1, edgelist=world.network.edges)
+
+    ch0 = health_list_to_color(h0)
+    ch1 = health_list_to_color(h1)
+    nodes0 = nx.draw_networkx_nodes(n0, pos, node_size=7, node_shape='^', nodelist=n0,
+                                    node_color=ch0, label='Trusters')
+    nodes1 = nx.draw_networkx_nodes(n1, pos, node_size=7, nodelist=n1, node_color=ch1, label='Skepticals')
+    plt.legend(scatterpoints=1)
+
+    legend_entries = [Line2D([0], [0], color="navy", marker='^', lw=0),
+                      Line2D([0], [0], color="navy", marker='o', lw=0),
+                      Line2D([0], [0], color="yellow", lw=2),
+                      Line2D([0], [0], color="red", lw=2),
+                      Line2D([0], [0], color="green", lw=2),
+                      Line2D([0], [0], color="navy", lw=2)]
+
+    plt.legend(legend_entries, ["Truster", "Skeptical", "Susceptible", "Infected", "Recovered", "Vaccinated"])
     return world.network
 
 
@@ -205,7 +231,7 @@ def simulate_animation():
 
 
 world = setup()
-fig = plt.figure(dpi = 300)
+fig = plt.figure(dpi=300)
 pos = nx.spring_layout(world.network)
 
 simulate_animation()

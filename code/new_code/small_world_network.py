@@ -9,7 +9,7 @@ class SmallWorldNetwork:
     watts_strogatz_graph(num_nodes_group, k, p, seed=None) graphs  and then then adds to every pair of distinct groups
     i.e. groups i and j i != j, a * (|i| + |j|) edges.
     """
-    def __init__(self, num_nodes, group_percentages, a, k, p):
+    def __init__(self, num_nodes, group_percentages, a, k, p, depth):
         num_groups = len(group_percentages)
 
         """
@@ -23,6 +23,15 @@ class SmallWorldNetwork:
         self.create_groups(group_percentages, k, num_groups, num_nodes, p)
         self.combine_groups(num_groups)
         self.connect_groups(a, num_groups)
+        self.depth_neighbors = []
+        self.compute_depth_neighbors(depth)
+
+    def compute_depth_neighbors(self, depth):
+        self.depth_neighbors = []
+        for i in self.network:
+            dict = nx.single_source_shortest_path_length(self.network, i, cutoff=depth)
+            dict.pop(i, None)
+            self.depth_neighbors.append(list(dict.keys()))
 
     def connect_groups(self, a, num_groups):
         """
