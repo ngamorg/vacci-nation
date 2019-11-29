@@ -144,10 +144,40 @@ Ref.:
 
 INITIAL SETUP
 IN OUR CALCUALTIONS, WE USE THE PARAMETERS AS OUTLINED BELOW:
+......
+
+%-----------------------------------------------------------------------------------------------
 
 NETWORK
-We decided on utilising 
-The hierarchical configuration model in STEGEHUIS ET AL (2016) serves as a basis for the model which is employed here. The two belief-groups are assumed to be closely connected within a group and are identified as sub-communities of the whole population. Relying on a small world model, each community is built by formulating a Watts-Strogatz network (WATTS, STROGATZ). % FEATURES
+The hierarchical configuration model in STEGEHUIS ET AL provides an orientation for the model which is employed in this thesis. Adopting the two belief-groups, these are identified as sub-communities of the whole population. Hence, each group is assumed to have a close intra-connection and a looser inter-connection. A small-world model is employed by formulating Watts-Strogatz networks (WATTS STROGATZ) for each groups, which are then connected as outlined below. 
+Each community \(G\in{\{T,S\}}\) is a subset of the whole population \(N\), thus \(G\subset{N}\), with T representing 'trusters' and S 'scepticals'.
+\begin{equation}
+\(g\colon \mathbb{N} \rightarrow{\{1,2\}}, 
+\begin{align*}
+g(i)\mapsto \left\{
+\begin{array}{ll}	1, & i\textrm{ in group }T \\
+	2, &  i\textrm{ in group }S \\
+\end{array} \right\) 
+\end{align*}
+\end{equation}
+indicates community-membership for an individual agent \(i\in{N}\).
+The groups consist of a total of \(n_{m}\) members, according to \(n_{m}=\sum_{i\in{N}}p_{m}(i)=p_{m}(i)*n\). With \(n={\[\|N\|}\) being the number of nodes in the total population \(N\). Furthermore, \(p_{m}(i)\) defines the probabilistic group allocation for a node \(i\) to be assigned to group \(m\in{\{1,2\}}\), such that 
+\begin{equation} 
+\begin{align*}
+\(p_{m}(i)=\left\{
+\begin{array}{ll}	p_{1}, & i\textrm{ assigned to }T \\
+	1-p_{1}=p_{2}, &  i\textrm{ assigned to  }S \\
+\end{array} \right\)
+\end{align*}
+\end{equation}
+and \(p_{m}(i)\) is independent of the individual agent \(i\). \\
+The Watts-Strogatz graph for every group \(G\subset{N}\) is then built by taking into account \(k\), the number of nearest neighbours that are connected to in a ring topology. \\ 
+
+STARTING HERE:
+Then, the two graphs are combined for any two members \(i,j\in{N}\) of different groups, requiring \(g(i)\neq g(j)\). The expected amount of edges \(e\) is added according to \(e=a*n\), with \(a\in{(0,1)}\). 
+NOT SURE ABOUT CORRECT RULE - UPDATE NEEDED \\
+
+
 
 NEIGHBOURS OF NEIGHBOURS: SHI ET AL (2017)
 
