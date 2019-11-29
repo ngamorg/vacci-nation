@@ -281,10 +281,14 @@ class Agent(object):
         age = 25 years
         '''
         maxGamma = 0.1
+        """
+        Not yet age-dependent
         if self._age < 25.0:
             return maxGamma * (1.0 - abs(self._age - 25.0) / 25.0)
         else:
             return maxGamma * (1.0 - abs(self._age - 25.0) / (100 - 25.0))
+        """
+        return maxGamma
 
     def get_health_status(self):
         return self._health
