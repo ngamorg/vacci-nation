@@ -148,6 +148,8 @@ IN OUR CALCUALTIONS, WE USE THE PARAMETERS AS OUTLINED BELOW:
 
 %-----------------------------------------------------------------------------------------------
 
+--------------- \\
+
 NETWORK
 The hierarchical configuration model in STEGEHUIS ET AL provides an orientation for the model which is employed in this thesis. Adopting the two belief-groups, these are identified as sub-communities of the whole population. Hence, each group is assumed to have a close intra-connection and a looser inter-connection. A small-world model is employed by formulating Watts-Strogatz networks (WATTS STROGATZ) for each groups, which are then connected as outlined below. 
 Each community \(G\in{\{T,S\}}\) is a subset of the whole population \(N\), thus \(G\subset{N}\), with T representing 'trusters' and S 'scepticals'.
@@ -171,12 +173,9 @@ The groups consist of a total of \(n_{m}\) members, according to \(n_{m}=\sum_{i
 \end{align*}
 \end{equation}
 and \(p_{m}(i)\) is independent of the individual agent \(i\). \\
-The Watts-Strogatz graph for every group \(G\subset{N}\) is then built by taking into account \(k\), the number of nearest neighbours that are connected to in a ring topology. \\ 
+The Watts-Strogatz graph for every group \(G\subset{N}\) is then built by taking into account \(k(i)\), the number of nearest neighbours OR of \(i\) that \(i\) is connected to in a ring topology. \\ 
 
-STARTING HERE:
-Then, the two graphs are combined for any two members \(i,j\in{N}\) of different groups, requiring \(g(i)\neq g(j)\). The expected amount of edges \(e\) is added according to \(e=a*n\), with \(a\in{(0,1)}\). 
-NOT SURE ABOUT CORRECT RULE - UPDATE NEEDED \\
-
+Thereafter, the two graphs are combined by adding fraction of edges of the edges in both groups to any two members \(i,j\in{N}\) of different groups, requiring \(g(i)\neq g(j)\). The amount of edges \(e_{add}\) is the fraction according to \(e_{add}=a*e_{g}=a*(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j))\), with \(a\in{(0,1)}\), and \(e_{g}=(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j))\) the total of edges in both groups. Any two members of different groups are then randomly connected until the added connections reaches \e_{add}\).  
 
 
 NEIGHBOURS OF NEIGHBOURS: SHI ET AL (2017)
