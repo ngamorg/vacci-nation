@@ -4,15 +4,19 @@
 
 \usepackage[latin1]{inputenc}
 
+\usepackage[colorlinks, linkcolor=blue, citecolor=blue, filecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{hyperref}
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{epstopdf}
-\usepackage{natbib}
+\usepackage[comma]{natbib}
 \usepackage{amssymb, amsmath}
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 
 \title{Epidemiology \& Immunization}
-\author{Julius Siebenaller, Jannes Hühnerbein, Benjamin Gundersen, Nicolas Antunes Morgado}
+\author{Julius Siebenaller, Jannes HÃ¼hnerbein, Benjamin Gundersen, Nicolas Antunes Morgado}
 \date{November 2019} 
 
 \begin{document}
@@ -61,7 +65,7 @@
 \end{minipage}
 &
 \begin{minipage}{8cm}
-\large Jannes Hühnerbein
+\large Jannes HÃ¼hnerbein
 \end{minipage}
 \end{tabular}
 
@@ -89,26 +93,224 @@
 % BEGIN REPORT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Abstract}
+\section*{Abstract}
 
 \section{Individual contributions}
 
 \section{Introduction and Motivations}
 
+\clearpage
+\section{Literature Review}
+The following provides a small review of the literature concerning (1) the modelling of infectious diseases with respect to population structures and subpopulations as well as disease spreading. And (2) game theoretical analyses regarding the vaccination decisions of individuals. 
+
+The work of \cite{kermack1927} is pivotal in the field of epidemiology, particularly concerning the spread of an infectious diseases in a population. Susceptible persons get infected based on the transmission rate of the disease and the size of the infectious subpopulation. They finally recover or die from the disease and hence join and stay in the recovered pool. This and subsequent compartmental models are commonly referred to as SIR-models of infectious diseases. 
+As outlined in \cite{earn2008}, respectively in \cite{dadlani2013} or \cite{sun2016}, there exist various adaptations of the SIR-compartmental-model to either allow for different subpopulations, or to modify the disease process.\footnote{The case of severe acute respiratory syndrome (SARS) serves as an example to model the infectious disease with an additional exposed subpopulations as an interphase between the susceptible and the infected state (SEI-models). Besides, certain diseases do not allow permanent recovery and the person affected joins the susceptible pool again. Examples include gonorrhoea or encephalitis, which are represented in SIS-models and do not comprise a recovered pool, or for instance the seasonality of influenza is represented in SIRS-models \citep{dadlani2013}.}\textsuperscript{,}\footnote{The decision to rely our analysis on an SIR-model is explained in SECTION 123.} 
+
+Underlying these compartmental models is the mass-action assumption, meaning that a homogeneous population is assumed in which all individuals are connected (\citeauthor{heesterbeek2005}, \citeyear{heesterbeek2005}; \citeauthor{rusu2015}, \citeyear{rusu2015}; \citeauthor{wilson1945a}, \citeyear{wilson1945a}). These limitations have been tackled by working with networks which allow to weaken the mass-action assumption, thus providing a better fit for the combination of population structures and disease transmissions (\citeauthor{keeling2005}, \citeyear{keeling2005}; \citeauthor{meyers2005}, \citeyear{meyers2005}).\footnote{Network models that are commonly utilised include random networks, lattices, small-world or scale-free networks, amongst others \citep{keeling2005}.}    
+
+For instance, \cite{liu2015} show that the network structure, here a small-world network, has a crucial impact on the percolation of an infectious disease.\footnote{\cite{liu2015} work with small-world networks that are created by randomly dis- and reconnecting the edges in two lattice-structures. Especially for a smaller infection rate, reducing the distances of the networks significantly contributes to a stronger spread of the disease.} 
+The network structure is decisive for the epidemic threshold, which determines the onset of an epidemic. For complex networks, \cite{pastor2002} show that eradication of infections cannot be achieved by random uniform immunization of individuals. Concerning small-world networks, the deduction of the percolation threshold, for both bond and site percolation, can be found in prior works of \cite{newman1999} and \cite{moore2000}. 
+
+By analysing hierarchical configuration models, formed by connecting communities in networks, the work of \cite{stegehuis2016} shows that the mesoscopic set of communities has the main influence on percolations in networks.
+
+Not only have network structures a significant impact on the range and transmission of an infectious disease, but they enable a shift in perspective to focus more on the individual agent with the related neighbourhood. 
+Analysing the individual agent by adopting a game-theoretical perspective, the calculation of payoffs from vaccination and infection are of significance. 
+
+Starting with the simple game-theoretical model in \cite{bauch2004}, they find that even minimal risks associated with a vaccination drive the uptake levels below the eradication threshold, given that agents behave selfishly. 
+Introducing evolutionary game-theory with social learning, the work of \cite{bauch2012} displays that these features allow for a better explanation of the evolution of vaccine-scares, which is further analysed in subsequent works.
+Analysing groups with different beliefs concerning vaccination decisions has gained further interest. For instance, \cite{liu2012} find that the presence of committed vaccinators increases uptake of vaccinations and avoids clustering of susceptibles for agents relying on adaptive-learning.  
+
+Combining the game-theoretical perspective with network structures yields further results that are important for epidemiology.   
+\cite{fu2010} show that agents forming beliefs by relying on adaptive-learning in complex networks, arrive at suboptimal vaccination levels. An outcome that is exacerbated when the selection of successful strategies is sensitive. Furthermore, the network structure has the potential to increase uptake levels, while it may serve as a catalyst to vaccination refusal for increases in vaccination costs.  
+\cite{shi2017} examine the effects of complex network structures on individual vaccine uptake in mixed strategies. Given an increase of the relative costs of vaccination, they find that heterogenous network structures preserve vaccination rates when compared to regular networks. Moreover, if only direct neighbours are considered, highly connected individuals are likelier to vaccinate, compared to the case of neighbours of neighbours. 
+
+Especially, the work of \cite{shim2012} motivates the approach that is employed in this paper. Providing a game-theoretical model of measles transmissions, they analyse the effect of perceived vaccine risks on uptake levels for a population divided into vaccine-sceptics and -believers. It is confirmed that uptake levels are lower if agents behave selfishly, which is more severe for vaccine-sceptics. Moreover, and of particular importance, they show that it is mainly the fraction of vaccine-sceptics, as opposed to their discrepancy in assessing vaccine risks, which drives reduced uptake levels. 
+
+%--------------------------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------------------------
+
 \section{Description of the Model}
 
+% Considerations regarding the disease and the modelled time-horizon:
+% Assume an outbreak of a severe disease with the possibility to receive a vaccination that works immediately when not yet infected. 
+
+The general assumptions of our model are as follows:
+\begin{itemize}
+\item{The infectious disease is modelled as a time-homogeneous Markov chain with a finite state space according to an SIVR-process with 'vaccinated', respectively 'recovered' representing the final or absorbing states with permanent immunity.}
+\item{Agents are assumed to be rational utility-maximisers endowed with complete information about their immediate neighborhood. They decide in each time-step whether or not to update their vaccination decision and hence if they will get vaccinated employing a mixed strategy.}
+\item{When facing the vaccination decision, each agent samples the health status of its direct neighborhood and deduces the probability of infection during the next epoch from the amount of infected neighbors.}
+\item{The time-horizon of an agent is bounded, in the sense that only a certain amount of time-steps is considered in the calculation of expected utility to be maximized through the vaccination-decision.}
+\item{Agents have a group affiliation to either be skeptical (group: 'skepticals') or trust (group: 'trusters') that vaccines are safe. The group membership of an agent determines the subjective costs they assign to vaccination, while the costs of infection are assumed to be equal between groups.}
+\item{The population structure is modelled as a small-world network, relying on a Watts-Strogatz model. We assume the two groups to represent small-worlds on their own. These two networks are then combined assuming that closeness in a group is larger than between groups.}
+\end{itemize}
+The work of \cite{shim2012} motivates the agent decision process implemented in the model and is partly derived from their analysis. Still, the approach developed in the present work deviates from it in several respects. First off, a discrete-time rather than continuous time Markov process is used to describe disease dynamics. This choice is justified both on simplicity grounds and because at least part of the dynamics -such as meeting other agents- are inherently discrete events. Secondly, individual transition probabilities are based on the local instantaneous incidence of infection rather than the steady endemic distribution. The latter is justified by the fact that the present model employs a network structure for the population rather than a lumped, well mixed approximation. Moreover, the derivation of the vaccination policy does not aim to obtain the Nash equilibrium strategy for the population but rather a locally optimal update rule under non-equilibrium conditions.
+%Restriction to the assumption of complete information, but can on the other hand justify the Markov process rule
+
+Concerning the epidemiological part of our model, the spread of the disease in the population follows an SIVR-process. Thus, the population is divided into (1) susceptible (2) infectious (3) recovered and (4) vaccinated subpopulations. The subpopulations are the same for the two belief-groups of scepticals and trusters. Susceptible agents can transition to the infectious state, \(S \rightarrow{} I \), when the infection from one of their neighbours spreads according to the parameter \(\beta\). If deciding for a vaccination, the agent transitions according to the rule \(S \rightarrow{} V \). An agent arrives at the decision to vaccinate with probability \(p_{vacc}(T)\) in every time-step \(T\). Infectious agents recover by the probability \(\gamma_{k}\), \(I \rightarrow{} R\). Recovered, respectively vaccinated, agents stay in their respective state which can be regarded as isomorphic with the exception of how these states are reached. Both recovered and vaccinated agents are assumed to become fully immunised.\footnote{A more detailed version of the SIVR-model can be found in \cite{tornatore2014}.} The evolution of the system is summarised in the stochastic matrix \(\mathbf{Q_{k}}\) and the health-state vector \(\mathbf{x_{k}(t)}\). The disease-specific parameters and transmission rates are outlined below:
+\begin{equation}\label{eq:1}
+	 \mathbf{x_{k}(t+1)} = \(\mathbf{Q_{k}}\) *  \mathbf{x_{k}(t)},
+\end{equation}
+and 
+\begin{equation}\label{eq:2}
+	 \(\mathbf{Q_{k}}\) = 
+	 \left (\begin{array}{cccc} p_{k}(S\rightarrow{}S)&p_{k}(I\rightarrow{}S)&p_{k}(R\rightarrow{}S)&p_{k}(V\rightarrow{}S) \\
+	 	p_{k}(S\rightarrow{}I)&p_{k}(I\rightarrow{}I)&p_{k}(R\rightarrow{}I)&p_{k}(V\rightarrow{}I) \\
+		p_{k}(S\rightarrow{}R)&p_{k}(I\rightarrow{}R)&p_{k}(R\rightarrow{}R)&p_{k}(V\rightarrow{}R) \\
+		p_{k}(S\rightarrow{}V)&p_{k}(I\rightarrow{}V)&p_{k}(R\rightarrow{}V)&p_{k}(V\rightarrow{}V) \\
+	  \end{array} \right)
+\end{equation}
+In particular: 
+\begin{equation}\label{eq:3}			% time-dependency of Q_{k}
+	 \(\mathbf{Q_{k}}\) = 
+	 \left (\begin{array}{cccc} 1-\lambda_{k}&0&0&0 \\
+	 	\lambda_{k}&1-\gamma_{k}&0&0 \\
+		0&\gamma_{k}&1&0 \\
+		0&0&0&1 \\
+	  \end{array} \right)
+\end{equation}
+with 
+\begin{equation}\label{eq:4}
+	\mathbf{x_{k}(t=0)}=\left(\begin{array}{cccc} 1-p_{vacc},&0,&0,&p_{vacc}  \end{array} \right),
+\end{equation} 
+\begin{equation}\label{eq:5}
+	\mathbf{x_{k}(t=0)}=\left(\begin{array}{cccc} 1-\beta^{initial}-p_{vacc}^{initial} ,&\beta^{initial},&0,&p_{vacc}^{initial}  \end{array} \right)
+\end{equation} 
+representing the state at \(t=0\), relying on the initial probabilities of infection and vaccination. 
+
+% INITIAL STATES
+
+As outlined above, \(\beta\) is an individual's probability of getting infected by one infected agent in the neighbourhood. \(\beta\) is assumed to be disease-specific and thus of constant value, independent of the agent. The actual rate of infection \(\lambda_{k}\) results from an agent sampling the neighbourhood and deriving the probability of infection given the edges that are connected with an infected note: 
+\begin{equation}\label{eq:6}
+	\lambda_{k}=1-(1-\beta)^{n_{k}},
+\end{equation}
+with \(n_{k}\) being the amount of infected neighbours of agent \(k\). %, which takes the following form: xyz % age-specific 
+
+The agent, being a rational utility-maximiser, faces the vaccination decision by solving the optimisation problem:
+\begin{equation}\label{eq:7}
+	\max p_{vacc}\{U(x)\}
+\end{equation}
+Here, the utility function takes the subsequent form, following the Bellman equation for a discrete-time Markov process: % reference for Bellmann equation
+\begin{equation}\label{eq:8}
+	\begin{split}
+		U_{k}(x) = \sum_{t=0}^{T}\mathbf{x_{k}(t)} * \frac{\mathbf{f_k(t)}}{(1+r)^t}
+	\end{split}
+\end{equation}
+Where \(\mathbf{f_{k}(t)}\) is the payoff vector of agent \(k\) with 		% Payoff-vectors
+\begin{equation}\label{eq:9}
+	\mathbf{f_{k}(t=0)}=\left( \begin{array}{cccc}0&0&0&-Cv_{k} \end{array} \right)^T,	
+	% other suggestions for transpose T
+\end{equation} 
+and
+\begin{equation}\label{eq:10}
+\(\mathbf{f_{k}(t=0)}=\left( \begin{array}{cccc} 0&-Ci_{k}&0&0 \end{array} \right)^T  
+\end{equation} represent the immediate vaccination payoffs, respectively the payoffs per time as result from infection.  
+The costs of vaccination, among others costs for the drug or possible side-effects, are included in \(Cv_{k}\). Besides, \(Ci_{k}\) captures the costs of infection, including without limitation expenditures for curative health-care absence from work or reduced personal well-being. Agents discount the payoffs of future events with a discount rate \(r\) and an agent's time horizon is shown via \(T\). \\
+Equation \eqref{eq:8} can be rewritten using equation \eqref{eq:1}:
+\begin{equation}\label{eq:11}
+	U_{k}(x)=\mathbf{x_{k}(t=0)} * \mathbf{f_{k}(t=0)} + \sum_{t=1}^{T}\mathbf{Q_{k}}^{t} * \frac{\mathbf{f_k(t)}}{(1+r)^t} * \mathbf{x_{k}(t=0)}
+\end{equation}
+% U_k(x) = ( f_k(t = 0) + sum_{t = 1}^{t = T} Q^t * f_k(t) / (1 + r)^t ) * x_k(0)                      (3)
+In order to compute the power  \(\mathbf(Q_{k})^t\)%Q^t
+, the matrix can be diagonalized: 
+\begin{equation}\label{eq:12}
+	\mathbf{Q_{k}}=\mathbf{P_{k}}^{-1}\mathbf{L_{k}P_{k}}
+%Q_k = P_k^-1 * L_k * P_k
+\end{equation}
+And we can rewrite \eqref{eq:11} as follows:
+\begin{equation}\label{eq:13}
+	U_{k}=\mathbf{x_{k}(0)}\mathbf{f_{k}(0)}+\mathbf{x_{k}(0)}*\mathbf{P_{k}^{-1}}*\sum_{t=1}^{T}\frac{\mathbf{L_{k}}}{(1+r)^t}*\mathbf{P_{k}}*\mathbf{f_{k}(t)}
+% U_k(x) = ( f_k(t = 0) + P_k^-1 * sum_{t = 1}^{t = T} (L_k / (1 + r))^t * P_k * f_k(t) ) * x_k(0)     (4)
+\end{equation}
+Finally, performing the required computations we obtain: 
+\begin{equation}\label{eq:14}
+	U_{k}(x)=-p_{vacc} * Cv_{k} - (1-p_{vacc}) * Cnotv_{k}
+% U_k(x) = -pvacc * Cv_k - (1 - pvacc) * Cnotv_k                                                       (5)
+\end{equation}
+Where: 
+\begin{equation}\label{eq:15}
+	Cnotv_{k}=Ci_{k}*\frac{\lambda_{k}}{\gamma_{k}-\lambda_{k}}*\bigg(\sum_{t = 1}^{t = T} \Big(\frac{1-\lambda_k}{1+r}\Big)^t - \sum_{t = 1}^{t = T}\Big(\frac{1-\gamma_k}{1+r}\Big)^t\bigg)
+% U_k(x) = -pvacc * Cv_k - (1 - pvacc) * Cnotv_k                                                       (5)
+\end{equation} 
+Equation \eqref{eq:14} is linear in \(p_{vacc}\), so it has only one global maximum which depends on the relative cost of each each decision. In particular, the preferred strategies are the following:
+\begin{equation}
+	\left\{\begin{array}{@{}lr@{}}
+        \multirow{p_{vacc}=0,} & \text{for }Cv_{k}>Cnotv_k}\\
+        {p_{vacc}=1,} & \text{for }Cnotv_{k}>Cv_k}\\
+        {p_{vacc}\in(0,1),} & \text{for }Cv_{k}=Cnotv_k}\\
+        \end{array}\right\}
+\end{equation}
+Ref.:
+\cite{shim2012}
+
+
+INITIAL SETUP
+IN OUR CALCUALTIONS, WE USE THE PARAMETERS AS OUTLINED BELOW:
+
+--------------- \\
+
+NETWORK \\
+The hierarchical configuration model in STEGEHUIS ET AL provides an orientation for the network structure which is employed in this thesis. Adopting the two belief-groups, these are identified as sub-communities of the whole population. Each group is assumed to have a close intra-connection and a looser inter-connection. A small-world model is employed by formulating Watts-Strogatz networks (WATTS STROGATZ) for every group, which are then connected as outlined below. \\
+Each community \(G\in{\{T,S\}}\) is a subset of the whole population \(N\), \(G\subset{N}\), with T representing 'trusters' and S representing 'scepticals'. Furthermore, 
+\begin{equation}
+\(g\colon \mathbb{N} \rightarrow{\{1,2\}}, 
+\begin{align*}
+g(i)\mapsto \left\{
+\begin{array}{ll}	1, & i\textrm{ in group }T \\
+	2, &  i\textrm{ in group }S \\
+\end{array} \right\) 
+\end{align*}
+\end{equation}
+indicates community-membership for an individual agent \(i\in{N}\).
+The groups consist of a total of \(n_{G}\) members, according to \(n_{G}=\sum_{i\in{N}}p_{G}(i)=p_{G}(i)*n\). With \(n={\[\|N\|}\) being the number of nodes in the total population \(N\). Furthermore, \(p_{G}(i)\) defines the probabilistic group allocation for a node \(i\) to be assigned to group \(m\in{\{1,2\}}\), such that 
+\begin{equation} 
+\begin{align*}
+\(p_{m}(i)=\left\{
+\begin{array}{ll}	p_{1}, & i\textrm{ assigned to }T \\
+	1-p_{1}=p_{2}, &  i\textrm{ assigned to  }S \\
+\end{array} \right\)
+\end{align*}
+\end{equation}
+and \(p_{G}(i)\) is independent of the individual agent \(i\). \\
+The Watts-Strogatz graph for every group \(G\subset{N}\) is then built by taking into account \(k(i)\), the number of nearest neighbours of \(i\) that \(i\) is connected to in a ring topology. \\ 
+Thereafter, the two graphs are combined by adding an additional fraction of the edges in both groups for any two members \(i,j\in{N},i\neq j,\) of different groups, requiring \(g(i)\neq g(j)\). The amount of edges \(e_{add}\) is the fraction according to 
+\begin{equation}
+e_{add}=a*e_{G}=a*\bigg(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j)\bigg),
+\end{equation}
+ with \(a\in{(0,1)}\), and \(e_{G}=(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j))\) the total of edges in both groups. Any two members of different groups are then randomly connected until the added connections reaches \(e_{add}\).  \\
+%-----
+NEIGHBOURS OF NEIGHBOURS: SHI ET AL (2017)
+\\
+
+
+
+
+
+% ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+% ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+% ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+% ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+% ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+% ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+% ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Implementation}
 
 \section{Simulation Results and Discussion}
 
 \section{Summary and Outlook}
 
-\section{References}
 
 
 
 
 
+
+\bibliographystyle{agsm}
+\bibliography{/Users/JuliusSiebenaller/Desktop/Vacci-Nation/Report/References.bib}
+\clearpage
 
 \end{document}  
 
