@@ -150,9 +150,9 @@ IN OUR CALCUALTIONS, WE USE THE PARAMETERS AS OUTLINED BELOW:
 
 --------------- \\
 
-NETWORK
-The hierarchical configuration model in STEGEHUIS ET AL provides an orientation for the model which is employed in this thesis. Adopting the two belief-groups, these are identified as sub-communities of the whole population. Hence, each group is assumed to have a close intra-connection and a looser inter-connection. A small-world model is employed by formulating Watts-Strogatz networks (WATTS STROGATZ) for each groups, which are then connected as outlined below. 
-Each community \(G\in{\{T,S\}}\) is a subset of the whole population \(N\), thus \(G\subset{N}\), with T representing 'trusters' and S 'scepticals'.
+NETWORK \\
+The hierarchical configuration model in STEGEHUIS ET AL provides an orientation for the model which is employed in this thesis. Adopting the two belief-groups, these are identified as sub-communities of the whole population. Each group is assumed to have a close intra-connection and a looser inter-connection. A small-world model is employed by formulating Watts-Strogatz networks (WATTS STROGATZ) for every group, which are then connected as outlined below. \\
+Each community \(G\in{\{T,S\}}\) is a subset of the whole population \(N\), \(G\subset{N}\), with T representing 'trusters' and S representing 'scepticals'. Furthermore, 
 \begin{equation}
 \(g\colon \mathbb{N} \rightarrow{\{1,2\}}, 
 \begin{align*}
@@ -163,7 +163,7 @@ g(i)\mapsto \left\{
 \end{align*}
 \end{equation}
 indicates community-membership for an individual agent \(i\in{N}\).
-The groups consist of a total of \(n_{m}\) members, according to \(n_{m}=\sum_{i\in{N}}p_{m}(i)=p_{m}(i)*n\). With \(n={\[\|N\|}\) being the number of nodes in the total population \(N\). Furthermore, \(p_{m}(i)\) defines the probabilistic group allocation for a node \(i\) to be assigned to group \(m\in{\{1,2\}}\), such that 
+The groups consist of a total of \(n_{G}\) members, according to \(n_{G}=\sum_{i\in{N}}p_{G}(i)=p_{G}(i)*n\). With \(n={\[\|N\|}\) being the number of nodes in the total population \(N\). Furthermore, \(p_{G}(i)\) defines the probabilistic group allocation for a node \(i\) to be assigned to group \(m\in{\{1,2\}}\), such that 
 \begin{equation} 
 \begin{align*}
 \(p_{m}(i)=\left\{
@@ -172,11 +172,15 @@ The groups consist of a total of \(n_{m}\) members, according to \(n_{m}=\sum_{i
 \end{array} \right\)
 \end{align*}
 \end{equation}
-and \(p_{m}(i)\) is independent of the individual agent \(i\). \\
-The Watts-Strogatz graph for every group \(G\subset{N}\) is then built by taking into account \(k(i)\), the number of nearest neighbours OR of \(i\) that \(i\) is connected to in a ring topology. \\ 
-
-Thereafter, the two graphs are combined by adding fraction of edges of the edges in both groups to any two members \(i,j\in{N}\) of different groups, requiring \(g(i)\neq g(j)\). The amount of edges \(e_{add}\) is the fraction according to \(e_{add}=a*e_{g}=a*(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j))\), with \(a\in{(0,1)}\), and \(e_{g}=(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j))\) the total of edges in both groups. Any two members of different groups are then randomly connected until the added connections reaches \(e_{add}\).  
-\\
+and \(p_{G}(i)\) is independent of the individual agent \(i\). \\
+The Watts-Strogatz graph for every group \(G\subset{N}\) is then built by taking into account \(k(i)\), the number of nearest neighbours of \(i\) that \(i\) is connected to in a ring topology. \\ 
+Thereafter, the two graphs are combined by adding an additional fraction of the edges in both groups for any two members \(i,j\in{N},i\neq j,\) of different groups, requiring \(g(i)\neq g(j)\). The amount of edges \(e_{add}\) is the fraction according to 
+\begin{equation}
+e_{add}=a*e_{G}=a*(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j)),
+\end{equation}
+ with \(a\in{(0,1)}\), and \(e_{G}=(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j))\) the total of edges in both groups. Any two members of different groups are then randomly connected until the added connections reaches \(e_{add}\).  \\
+%-----
+NEIGHBOURS OF NEIGHBOURS: SHI ET AL (2017)
 
 NEIGHBOURS OF NEIGHBOURS: SHI ET AL (2017)
 
