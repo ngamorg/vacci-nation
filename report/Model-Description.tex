@@ -176,13 +176,12 @@ and \(p_{G}(i)\) is independent of the individual agent \(i\). \\
 The Watts-Strogatz graph for every group \(G\subset{N}\) is then built by taking into account \(k(i)\), the number of nearest neighbours of \(i\) that \(i\) is connected to in a ring topology. \\ 
 Thereafter, the two graphs are combined by adding an additional fraction of the edges in both groups for any two members \(i,j\in{N},i\neq j,\) of different groups, requiring \(g(i)\neq g(j)\). The amount of edges \(e_{add}\) is the fraction according to 
 \begin{equation}
-e_{add}=a*e_{G}=a*(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j)),
+e_{add}=a*e_{G}=a*\bigg(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j)\bigg),
 \end{equation}
  with \(a\in{(0,1)}\), and \(e_{G}=(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j))\) the total of edges in both groups. Any two members of different groups are then randomly connected until the added connections reaches \(e_{add}\).  \\
 %-----
 NEIGHBOURS OF NEIGHBOURS: SHI ET AL (2017)
 
-NEIGHBOURS OF NEIGHBOURS: SHI ET AL (2017)
 
 
 \section{Computational model}
