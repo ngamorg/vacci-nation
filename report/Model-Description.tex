@@ -127,15 +127,21 @@ and:
 
 represent the immediate vaccination payoffs, respectively the payoffs per time step as a result of infection.  
 The different components of the perceived cost, among others the market price of the vaccine and it's expected side-effects conditional on the agent's beliefs, are included in \(C_{v,k}\). Besides, \(C_{i,k}\) captures the costs of infection, including medical treatment expenditures, absence from work or reduced personal well-being. Finally, agents discount the payoffs of future events using a discount rate \(r\).\\
-Even though the actual infection probability  \(\lambda_{k}(t)\) is time dependent due to fluctuations in the incidence of the disease in the population, it is assumed to lie beyond the capabilities of any individual to simulate the entire social network for an accurate prediction of its evolution. Instead, each susceptible agent makes a point estimation \(\hat{\lambda}_{k}\) and assumes it to be constant during the forward time-horizon \(T\). The latter hypothesis amounts to treating the infection dynamics as a stationary Markov chain at the agent level:
+Even though the actual infection probability  \(\lambda_{k}(t)\) is time dependent due to fluctuations in the incidence of the disease in the population, it is assumed to lie beyond the capabilities of any individual to simulate the entire social network for an accurate prediction of its evolution. Instead, each susceptible agent makes a point estimation \(\hat{\lambda}_{k}\) and assumes it to be constant during the forward time-horizon \(T\):
 
 \begin{equation}\label{eq:10}
+ 	\hat{\lambda}_{k}=\frac{n_{k}(t)}{n_{T}}
+\end{equation}
+
+where \(n_{T}\) corresponds to the agent's total number of neighbors. The latter hypothesis amounts to treating the infection dynamics as a stationary Markov chain at the agent level:
+
+\begin{equation}\label{eq:11}
 	 \mathbf{x}_k(t+1) = \hat{\mathbf{Q}}_k \cdot \mathbf{x}_k(t)
 \end{equation}
 
 with:
 
-\begin{equation}\label{eq:11}
+\begin{equation}\label{eq:12}
 	 \hat{\mathbf{Q}}_k = 
 	 \left (\begin{array}{cccc} 1-\hat{\lambda}_{k}&0&0&0 \\
 	 	\hat{\lambda}_{k}&1-\gamma_{k}&0&0 \\
@@ -146,37 +152,37 @@ with:
 
 Given that the evolution of a stationary Markov chain is independent of any absolute time reference, without loss of generality \eqref{eq:7} can be rewritten using $t = 0$. Employing \eqref{eq:8} and \eqref{eq:9}:
 
-\begin{equation}\label{eq:12}
+\begin{equation}\label{eq:13}
 	U_k(\mathbf{x}_k(0), T) = \mathbf{f}_k(0) \cdot \mathbf{x}_k(0) + \sum_{t=1}^{T} {\mathbf{f}_k(t) \cdot   \left(\frac{ \hat{\mathbf{Q}}_k}{1+r}\right)^t \cdot \mathbf{x}_k(0) }
 \end{equation}
 
 In order to compute the power \({\hat{\mathbf{Q}}_k}^t\), the matrix can be diagonalized:
 
-\begin{equation}\label{eq:13}
+\begin{equation}\label{eq:14}
 	\hat{\mathbf{Q}}_k=\hat{\mathbf{R}}_{k}\hat{\mathbf{\Lambda}}_{k}\hat{\mathbf{R}}^{-1}_{k}
 \end{equation}
 
-And we can rewrite \eqref{eq:12} as follows:
+And we can rewrite \eqref{eq:13} as follows:
 
-\begin{equation}\label{eq:14}
+\begin{equation}\label{eq:15}
 	U_k(\mathbf{x}_k(0), T)= \left[ \mathbf{f}_k(0) + \mathbf{f}_k(t) \cdot \hat{\mathbf{R}}_{k} \cdot \sum_{t=1}^{T} { \left(\frac{ \hat{\mathbf{\Lambda}}_{k}}{1+r}\right)^t \cdot \hat{\mathbf{R}}^{-1}_{k}} \right] \cdot \mathbf{x}_k(0)
 \end{equation}
 
 Finally, performing the required computations we obtain: 
 
-\begin{equation}\label{eq:15}
+\begin{equation}\label{eq:16}
 	U_k(\mathbf{x}_k(0), T)=-p_{vacc} \cdot C_{v,k} - (1-p_{vacc}) \cdot C_{notv,k}
 \end{equation}
 
 where: 
 
-\begin{equation}\label{eq:16}
+\begin{equation}\label{eq:17}
 	C_{notv,k}=C_{i,k} \cdot \left( \frac{\hat{\lambda}_{k}}{\gamma_{k}-\hat{\lambda}_{k}} \right) \cdot \left[\sum_{t = 1}^{T} \left(\frac{1-\hat{\lambda}_{k}}{1+r}\right)^t - \sum_{t = 1}^{T}\left(\frac{1-\gamma_k}{1+r}\right)^t\right]
 \end{equation}
 
-Equation \eqref{eq:16} is linear in \(p_{vacc}\), so it has only one global maximum which depends on the relative cost of each decision. In particular, the preferred strategies are the following:
+Equation \eqref{eq:17} is linear in \(p_{vacc}\), so it has only one global maximum which depends on the relative cost of each decision. In particular, the preferred strategies are the following:
 
-\begin{equation}\label{eq:17}
+\begin{equation}\label{eq:18}
 	\begin{array}
 	{@{}lr@{}}
         \multirow{p_{vacc}=0,} & \text{for }C_{v,k}>C_{notv,k} \\
@@ -185,7 +191,7 @@ Equation \eqref{eq:16} is linear in \(p_{vacc}\), so it has only one global maxi
     \end{array}
 \end{equation}
 
-Thus, agents follow a pure strategy for almost all values of \(C_{notv,k}\). It is clear from Equation\eqref{eq:17} that \textit{ceteris paribus} a different vaccination strategy will be chosen depending on an agent's beliefs, manifested through different relative values for \(C_{v,k}\) and \(C_{i,k}\). In particular, it is expected that individuals skeptical towards vaccines will preferentially decide not to vaccinate for a given \(\hat{\lambda}_{k}\) and \(T\), as they consider the costs to be higher than what individuals who believe in the effectiveness of vaccines do.
+Thus, agents follow a pure strategy for almost all values of \(C_{notv,k}\). It is clear from Equation\eqref{eq:18} that \textit{ceteris paribus} a different vaccination strategy will be chosen depending on an agent's beliefs, manifested through different relative values for \(C_{v,k}\) and \(C_{i,k}\). In particular, it is expected that individuals skeptical towards vaccines will preferentially decide not to vaccinate for a given \(\hat{\lambda}_{k}\) and \(T\), as they consider the costs to be higher than what individuals who believe in the effectiveness of vaccines do.
 
 Ref.:
 \cite{shim2012}
@@ -199,7 +205,9 @@ The model described in the previous section contains a list of free parameters, 
         \begin{tabular}{|c|c|c|}
         \hline
                 Parameter    &    Value       \\
-        \hline
+         \hline
+                 \(r\)       &    0.01        \\
+	\hline
                  \(T\)       &    10 days        \\
         \hline
                  \(\beta\)   &    0.05 day\(^{-1}\)        \\
