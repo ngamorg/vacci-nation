@@ -8,6 +8,8 @@ class SmallWorldNetwork:
     Creates a graph with num_nodes nodes and splits them up into num_groups = |group_percentage|
     watts_strogatz_graph(num_nodes_group, k, p, seed=None) graphs  and then then adds to every pair of distinct groups
     i.e. groups i and j i != j, a * (|i| + |j|) edges.
+    Creates a list depth_neighbors of lists of integers. depth_neighbors[i] = list of all nodes j, i =/= j, with shortest path(i, j) <= depth
+    https://networkx.github.io/documentation/networkx-1.10/reference/generated/networkx.generators.random_graphs.watts_strogatz_graph.html
     """
     def __init__(self, num_nodes, group_percentages, a, k, p, depth):
         num_groups = len(group_percentages)
@@ -29,6 +31,9 @@ class SmallWorldNetwork:
     def compute_depth_neighbors(self, depth):
         self.depth_neighbors = []
         for i in self.network:
+            """
+            https://networkx.github.io/documentation/networkx-1.10/reference/generated/networkx.algorithms.shortest_paths.unweighted.single_source_shortest_path_length.html
+            """
             dict = nx.single_source_shortest_path_length(self.network, i, cutoff=depth)
             dict.pop(i, None)
             self.depth_neighbors.append(list(dict.keys()))
@@ -42,7 +47,7 @@ class SmallWorldNetwork:
                 size_i = len(self.groups[i])
                 size_j = len(self.groups[j])
                 num_add_edges = int(a * (size_i + size_j))
-
+                print("add", num_add_edges)
                 for k in range(0, num_add_edges):
                     node_i = random.randint(0, size_i - 1) + self.groups_translation[i]
                     node_j = random.randint(0, size_j - 1) + self.groups_translation[j]
@@ -51,6 +56,7 @@ class SmallWorldNetwork:
 
     def combine_groups(self, num_groups):
 
+        #colors for exporting
         colors = [
             {'r': 255, 'g': 0, 'b': 0, 'a': 1.0},
             {'r': 0, 'g': 255, 'b': 0, 'a': 1.0},
@@ -69,6 +75,7 @@ class SmallWorldNetwork:
         for i in range(0, num_groups):
             group = self.groups[i]
             new_group = nx.Graph()
+            print(i, "edges", len(group.edges))
             for node in group.nodes:
                 self.network.add_node(node + k)
                 new_group.add_node(node + k)
