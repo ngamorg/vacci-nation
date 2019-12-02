@@ -117,7 +117,7 @@ class Agent(object):
         if p < self._lambda_k:
             self._health_next = Health.INFECTED
 
-        # Get vaccinated? (Decide once in 30 days)
+        # Get vaccinated? (Decide once in T days)
         self.look(depth_neighbors, agents)
         dec = np.random.uniform(0.0, 1.0)
         if dec < 1/self.T and not self._health_next == Health.INFECTED:
