@@ -190,10 +190,43 @@ Thus, agents follow a pure strategy for almost all values of \(C_{notv,k}\). It 
 Ref.:
 \cite{shim2012}
 
+\section{Initial Setup and Baseline Parameters}
 
+The model described in the previous section contains a list of free parameters, whose baseline values we summarize in Table~\ref{tab:Table1} below and were used in all simulations unless stated otherwise.
 
-INITIAL SETUP
-IN OUR CALCUALTIONS, WE USE THE PARAMETERS AS OUTLINED BELOW:
+\begin{table}[htbp]
+        \centering
+        \begin{tabular}{|c|c|c|}
+        \hline
+                Parameter    &    Value       \\
+        \hline
+                 \(T\)       &    10 days        \\
+        \hline
+                 \(\beta\)   &    0.05 day\(^{-1}\)        \\
+        \hline
+                 \(\gamma\)   &    0.05  day\(^{-1}\)      \\
+        \hline
+                 \(C_{i,T}\) / \(C_{i,S}\) &    1.0    \\
+        \hline
+                 \(C_{v,T}\)  &    0.01       \\
+        \hline
+		 \(C_{v,S}\)  &    0.05       \\
+        \hline
+		 \(k\)  &    8      	      \\
+        \hline
+		 \(\alpha\)  &    0.3         \\
+        \hline
+		 \(p_{rewiring}\)  &    0.2   \\
+        \hline
+        \end{tabular}
+        \caption{Baseline values for the free parameters of the epidemic model}
+        \label{tab:Table1}
+    \end{table}
+
+With respect to the parameters affecting each agent's decision process, the value of \(\gamma\) was specified assuming that a seasonal infectious disease would take an average of 20 days to get recovered from, and \(T\) was chosen as 1/2 of this time frame. For the current implementation of the model, no dependency of \(\gamma\) on the agent state was included, so that \(\forall k : \gamma_{k} = \gamma\). Given that the decision process is governed by the relative cost of vaccination to infection, the latter was fixed at a reference value of 1.0 for both groups and only \(C_v\) was set to reflect their different subjective costs. Finally, \(\beta\) was obtained from numerical experiments matching the expected dynamics for a fully connected graph, corresponding to a completely mixed population.\\
+Secondly, the parameters describing the network structure were set to describe a community of citizens in a typical urban environment. In this regard, a value of \(k = 8\) was chosen for the number of nearest neighbors in both groups of affiliation as well as a fraction \(\alpha = 0.3\) for the proportion of links between the two belief communities, in order to reflect differences in interpersonal affinity.
+% TODO: COMPLETE SECTION ABOUT NETWORK
+
 ......
 
 %-----------------------------------------------------------------------------------------------
