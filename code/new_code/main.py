@@ -9,10 +9,11 @@ from small_world_network import SmallWorldNetwork
 from agent import Agent, Health, Group, GroupBehavior
 
 n = 1000
-group_percentages = [0.6, 0.4]
-k = 4
+#                    Trust Skept
+group_percentages = [0.5, 0.5]
+k = 8
 change_edge_percentage = 0.2
-alpha = 0.2
+alpha = 0.3
 
 groups = [Group.TRUSTER, Group.SKEPTICAL]
 group_behaviours = [GroupBehavior(Group.TRUSTER), GroupBehavior(Group.SKEPTICAL)]
@@ -20,13 +21,17 @@ group_behaviours = [GroupBehavior(Group.TRUSTER), GroupBehavior(Group.SKEPTICAL)
 age_mu = 40
 age_sigma = 15
 
-lim_init_infected = [0.01, 0.01]
-lim_init_vacci = [0.06, 0.01]
+lim_init_infected = [0.005, 0.005]
+lim_init_vacci = [0.005, 0.005]
 
 agents = list()
 
-depth = 2
+depth = 1
 
+Agent.beta = 0.05
+
+frames = 100
+fps = 4
 
 def setup():
     global agent
@@ -64,10 +69,17 @@ def simulate(world: SmallWorldNetwork, group_behaviours, agents):
 
 
 def count_status(agents):
+    """
+    counts all health states in the network
+    :param agents:
+    :return:
+    """
     num_inf = 0
     num_sus = 0
     num_rec = 0
     num_vac = 0
+    num_vacT = 0
+    num_vacS = 0
 
     for agent in agents:
         if agent.get_health_status() == Health.INFECTED:
@@ -75,6 +87,10 @@ def count_status(agents):
         if agent.get_health_status() == Health.RECOVERED:
             num_rec += 1
         if agent.get_health_status() == Health.VACCINATED:
+            if agent._group == Group.TRUSTER:
+                num_vacT += 1
+            if agent._group == Group.SKEPTICAL:
+                num_vacS += 1
             num_vac += 1
         if agent.get_health_status() == Health.SUSCEPTIBLE:
             num_sus += 1
@@ -83,6 +99,8 @@ def count_status(agents):
     Agent.num_sus = num_sus
     Agent.num_vac = num_vac
     Agent.num_rec = num_rec
+    Agent.num_vacT = num_vacT
+    Agent.num_vacS = num_vacS
 
 
 def export(net, agents, v):
@@ -145,6 +163,10 @@ def simulate_export():
 
 
 def health2num(health):
+    """
+    :param health:
+    :return: num(health)
+    """
     if health == agent._health.SUSCEPTIBLE:
         return 0
     if health == agent._health.INFECTED:
@@ -167,19 +189,28 @@ def generate_health_list(agents):
 
 
 def health_list_to_color(health_list):
-    color_health_list = []
     """
+    convertss the health_list which is a list of integers to a list of strings, where the strings represent colors
     SUSCEPTIBLE <-> yellow
     INFECTED <->  red
     RECOVERED <-> green
     VACCINATED <-> navy
     """
+    color_health_list = []
     colors = ["yellow", "red", "green", "navy"]
     for i in range(0, len(health_list)):
         color_health_list.append(colors[health_list[i]])
     return color_health_list
 
+
 def split_groups(nodes, group_list, health_color):
+    """
+    Splits the list of nodes and health color into two different lists coressponding to their groups.
+    :param nodes:
+    :param group_list:
+    :param health_color:
+    :return: nodes0, nodes1, healh_color0, health_color1
+    """
     health_color0 = []
     health_color1 = []
 
@@ -197,10 +228,18 @@ def split_groups(nodes, group_list, health_color):
 
 
 def time_stamp(iteration):
+    """
+
+    :param iteration:
+    :return: void
+    """
     print(iteration)
 
     global fig
     simulate(world, group_behaviours, agents)
+    #clears figure
+
+
     fig.clf()
 
     n0, n1, h0, h1 = split_groups(world.network, world.group_colors, generate_health_list(agents))
@@ -213,7 +252,6 @@ def time_stamp(iteration):
                                     node_color=ch0, label='Trusters')
     nodes1 = nx.draw_networkx_nodes(n1, pos, node_size=7, nodelist=n1, node_color=ch1, label='Skepticals')
     plt.legend(scatterpoints=1)
-
     legend_entries = [Line2D([0], [0], color="navy", marker='^', lw=0),
                       Line2D([0], [0], color="navy", marker='o', lw=0),
                       Line2D([0], [0], color="yellow", lw=2),
@@ -222,18 +260,58 @@ def time_stamp(iteration):
                       Line2D([0], [0], color="navy", lw=2)]
 
     plt.legend(legend_entries, ["Truster", "Skeptical", "Susceptible", "Infected", "Recovered", "Vaccinated"])
+
+
+    i = iteration
+    count_status(agents)
+    plot[i]['sus'] = Agent.num_sus
+    plot[i]['inf'] = Agent.num_inf
+    plot[i]['rec'] = Agent.num_rec
+    plot[i]['vac'] = Agent.num_vac
+    plot[i]['vacT'] = Agent.num_vacT
+    plot[i]['vacS'] = Agent.num_vacS
+    plot[i]['recvac'] = Agent.num_rec + Agent.num_vac
     return world.network
+
+def group_neighbors():
+    pass
 
 
 def simulate_animation():
-    ani = FuncAnimation(fig, time_stamp, frames=100, interval=100)
-    ani.save('network.mp4', fps=4, extra_args=['-vcodec', 'libx264'])
+    """
+    Create a FuncAnimation which draws on fig, calls the function time_stamp every iteration to update the simulation.
+    :return: void
+    """
+    global fig
+    ani = FuncAnimation(fig, time_stamp, frames=frames)
+    ani.save('network.mp4', fps=fps, extra_args=['-vcodec', 'libx264'])
+
+    plt.close()
+    fig2 = plt.figure()
+    fig2.clf()
+    ax = fig2.add_subplot(111, axisbelow=True)
+    print(plot)
+    ax.plot(range(frames), [elem['sus'] for elem in plot], 'yellow', lw=1.5, label="Susceptible")
+    ax.plot(range(frames), [elem['vac'] for elem in plot], 'navy', lw=1.5, label="Vaccinated")
+    ax.plot(range(frames), [elem['vacT'] for elem in plot], 'skyblue', lw=1.5, label="VaccinatedT")
+    ax.plot(range(frames), [elem['vacS'] for elem in plot], 'cyan', lw=1.5, label="VaccinatedS")
+    ax.plot(range(frames), [elem['rec'] for elem in plot], 'green', lw=1.5, label="Recovered")
+    ax.plot(range(frames), [elem['inf'] for elem in plot], 'red', lw=1.5, label="Infected")
+    ax.plot(range(frames), [elem['recvac'] for elem in plot], 'darkgrey', lw=1.5, label="Recovered or Vaccinated")
+    ax.set_ylim(0, world.network.number_of_nodes())
+    ax.set_xlim(0, frames)
+    plt.legend()
+    plt.show()
 
 
 world = setup()
 fig = plt.figure(dpi=300)
+plot = [{} for i in range(frames)]
+
+#compute the position of all nodes in the network
 pos = nx.spring_layout(world.network)
 
+#start the animation
 simulate_animation()
 
 exit()
