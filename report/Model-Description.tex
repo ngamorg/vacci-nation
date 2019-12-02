@@ -130,7 +130,7 @@ The different components of the perceived cost, among others the market price of
 Even though the actual infection probability  \(\lambda_{k}(t)\) is time dependent due to fluctuations in the incidence of the disease in the population, it is assumed to lie beyond the capabilities of any individual to simulate the entire social network for an accurate prediction of its evolution. Instead, each susceptible agent makes a point estimation \(\hat{\lambda}_{k}\) and assumes it to be constant during the forward time-horizon \(T\):
 
 \begin{equation}\label{eq:10}
- 	\hat{\lambda}_{k}=\frac{n_{k}(t)}{n_{T}}
+ 	\hat{\lambda}_{k}=\beta \cdot \frac{n_{k}(t)}{n_{T}}
 \end{equation}
 
 where \(n_{T}\) corresponds to the agent's total number of neighbors. The latter hypothesis amounts to treating the infection dynamics as a stationary Markov chain at the agent level:
