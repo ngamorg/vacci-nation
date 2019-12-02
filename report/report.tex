@@ -94,10 +94,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Abstract}
+This paper describes our approach in simulating a fictional society and its vaccination behaviour throughout a single flu season (i.e. one winter).
+
+The model that we want to investigate is split into two groups. One being very trusting towards vaccinations; the other having a more skeptical attitude.
+
+The main emphasis is being placed on investigating different distributions, thus changing the composition of society in terms of what percentage is trusting or skeptical towards vaccinating and what effect this has on the flu outbreak.
+\newpage
+
 
 \section{Individual contributions}
-
 \section{Introduction and Motivations}
+Several times in human history epidemics have left areas and sometimes entire civilizations in total devastation. Only with the rise of modern medicine and especially widely available vaccines the development of large and complex societies of today was made possible.
+
+The characteristics of the flu with its almost yearly outbreaks and frequent mutations - making a general vaccine impossible to develop - yield an interesting game theoretical problem.
+
+In this project we want to investigate the behaviour of a fictional society by splitting it up into two different groups. One group trusts vaccines and hence needs very little incentive to get vaccinated ('trusters'). The other group is very skeptical towards the cost and return of vaccines and hence vaccinates much later, sometimes not at all ('skepticals').
+
+With 'anti-vaxing' groups becoming more popular and diseases thought to be extinct reappearing even in Central Europe \footnote{e.g. a case of measles at ETH Zurich in summer 2019} this question is gaining relevance and hence we decided to take a closer look at it.
+
 
 \clearpage
 \section{Literature Review}
@@ -346,12 +360,51 @@ NEIGHBOURS OF NEIGHBOURS: SHI ET AL (2017)
 % ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 % ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 % ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+%------------------------------
+%   IMPLEMENTATION
+%------------------------------
+
 \section{Implementation}
 
+All our calculations are carried out in Python. More specifically we used $networkx$ for creating the network, $numpy$ for calculations and $matplotlib$ to visualize the results.
+
+The code is split up in three files. $main.py$ forms the core of the simulation and is the only file that should be executed. Also, all variables that characterize the simulation and can be altered in $main.py$ to obtain different results.
+
+\subsection{Creating the network}
+By executing $main.py$ an object of type $SmallWorldNetwork$ (defined in\\ $small\_world\_network.py$) is created. The parameters characterizing the network are $n$, $group\_percentages$, $k$, $change\_edge\_percentage$ and $alpha$ defined at the beginning of $main.py$.
+
+$n$ defines the total number of nodes in the network. This number is then split up into different groups according to $group\_percentages$. For example, if $n=100$ and $group\_percentages = [0.2, 0.8]$ two groups are created. One with 20 nodes and one with 80 nodes. For each of these groups a Watts-Strogatz model is created using $k$ and $change\_edge\_percentage$. In a Watts-Strogatz model each node is connected to its $k$ nearest neighbors. Then each edge is rewired with a probability of  $change\_edge\_percentage$.
+
+After creating a model for each group, the individual groups are loosely connected with a percentage $alpha$. In other words $alpha * n$ nodes are connected to both groups while all other nodes only share edges with nodes of the same group.
+
+Thus, it is more likely to be connected to members of your own group but at the same time groups are never completely isolated from each other. 
+
+In a last step the created network is populated with agents. Hence, for each node an agent with the respective group type is created and stored in a list. The initial health status (susceptible, infected or vaccinated) is derived from rates defined in $lim\_init\_infected$ and $lim\_init\_vacci$. Furthermore, each agent has a certain age that is derived from a normal distribution using $age\_mu$ and $age\_simga$.
+
+Age is only included for possible extensions of the model in the future. It is not being used in our model.
+
+
+\subsection{Simulating the agents' behaviour}
+Almost all functions in $main.py$ are responsible for visualizing the results.
+The simulation itself almost entirely takes place in the $Agent$ class defined in $agent.py$.
+
+
+In our case every iteration represents a day in the agents' life. The number of days to be simulated is defined by the variable $frames$.
+Hence, every day the main file loops over all agents in the network and thus calls the $run$ function exactly once (per day). Starting from the $run$ function a number of other functions is called that determine whether the agent is getting infected, recovers or vaccinates. For the decision of vaccination the $act$ function gathers the different values needed in equation \eqref{eq:16} to ultimately decide whether to vaccinate or not (equations \eqref{eq:17}).
+
+
+%------------------------------
+%   RESULTS AND DISCUSSION
+%------------------------------
 \section{Simulation Results and Discussion}
 
-\section{Summary and Outlook}
 
+%------------------------------
+%   SUMMARY AND OUTLOOK
+%------------------------------
+
+\section{Summary and Outlook}
 
 
 
