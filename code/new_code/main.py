@@ -11,37 +11,70 @@ from small_world_network import SmallWorldNetwork
 from agent import Agent, Health, Group, GroupBehavior
 
 class PlotMode(Enum):
+    # generates a mp4 and a plot with all (sub) health states
     MP4PLOT = 0
+    # same as mp4plot but without mp4
     ONLYPLOT = 1
+    # plots the average vaccination amount with different group percentages over multiple runs against each other
     VACCIPLOT = 2
 
+"""
+START changable variables
+"""
 
+# define what the output should look like
 mode = PlotMode.VACCIPLOT
 
+# expected number of nodes of the network on which the simulation runs on
 n = 1000
-#                    Trust Skept
+
+# percentage of Trusters and Skepticals in the network
+#                   Trust Skept
 group_percentages = [0.5, 0.5]
+
+# number of initial neighbors when creating a group graph / watts_strogatz_graph
 k = 8
+
+# probability for every edge that it is relinked (in a group graph)
 change_edge_percentage = 0.2
+
+# number of edges that are added between two different groups i, j is alpha * ([number of nodes in i] + [number of nodes in j])
 alpha = 0.05
 
+# same length as group_percentages, define the group of every initial graph
 groups = [Group.TRUSTER, Group.SKEPTICAL]
+# same length as group_percentages, define the believes of every group
 group_behaviours = [GroupBehavior(Group.TRUSTER), GroupBehavior(Group.SKEPTICAL)]
 
-age_mu = 40
-age_sigma = 15
-
+# initially infected
+#                   Trust   Skept
 lim_init_infected = [0.005, 0.005]
+
+# initially vaccinated
+#                 Trust  Skept
 lim_init_vacci = [0.005, 0.005]
+
+
+# change the depth of view the agents use to estimate their chance of getting infected, 1 => direct neighbors, 2 => neighbors of neighbors
+depth = 1
+
+# infection rate / probability that a person infects its neighbor
+Agent.beta = 0.05
+
+# number of iterations of the simulation
+frames = 70
+
+# frames per second of the simulation
+fps = 4
+
+"""
+END changable variables
+"""
 
 agents = list()
 
-depth = 1
-
-Agent.beta = 0.05
-
-frames = 70
-fps = 4
+age_mu = 40
+age_sigma = 15
 
 def setup():
     global agents
@@ -334,6 +367,7 @@ def simulate_animation():
 
 
 if mode == PlotMode.MP4PLOT or mode == PlotMode.ONLYPLOT:
+
     fig = plt.figure(dpi=300)
 
     world = setup()
@@ -346,28 +380,42 @@ if mode == PlotMode.MP4PLOT or mode == PlotMode.ONLYPLOT:
     simulate_animation()
 
 if mode == PlotMode.VACCIPLOT:
+    """
+    plot the average vaccination levels of different group_percentages over tries_per_percentage against each other.
+    only works for two groups, currently with Trusters as group one and Skepticals as the second group
+    start with the percentages start for the first group and (1 - start) for the second
+    then increment start by step and do the same as above, repeat aslong <= end
+    """
     fig = plt.figure(dpi=300)
     plot = [{} for i in range(frames)]
     vacci_iteration = 0
+    tries_per_percentage = 20
     start = 0.1
     step = 0.2
     end = 0.9
     total_vacci_iterations = int((end - start) / step + 1)
     print(total_vacci_iterations)
     vacci_plot = [[0 for i in range(frames)] for i in range(total_vacci_iterations)]
-    tries_per_iteration = 20
+
+    """
+    simulate all
+    """
     for vacci_iteration in range(total_vacci_iterations):
         group_percentage_left = round(start + vacci_iteration * step, 1)
         print(str(group_percentage_left) + " Truster", vacci_iteration)
         group_percentages[0] = group_percentage_left
         group_percentages[1] = round(1 - group_percentage_left, 1)
-        for try_iteration in range(tries_per_iteration):
+        for try_iteration in range(tries_per_percentage):
             print("try: ", try_iteration)
             world = setup()
             simulate_animation()
 
     vacci_colors = ["red", "yellow", "green", "aqua", "navy"]
 
+
+    """
+    average and plot all
+    """
     fig3 = plt.figure()
     fig3.clf()
     ax = fig3.add_subplot(111, axisbelow=True)
@@ -376,7 +424,7 @@ if mode == PlotMode.VACCIPLOT:
     for vacci_iteration in range(total_vacci_iterations):
 
         for i in range(frames):
-            vacci_plot[vacci_iteration][i] /= tries_per_iteration
+            vacci_plot[vacci_iteration][i] /= tries_per_percentage
 
         group_percentage_left = round(start + vacci_iteration * step, 1)
         group_percentage_right = round(1 - group_percentage_left, 1)
