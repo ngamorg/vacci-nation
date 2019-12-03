@@ -116,7 +116,7 @@ With 'anti-vaxing' groups becoming more popular and diseases thought to be extin
 %----------------------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------------------
 \section{Literature Review}
-The following provides a small review of the literature concerning (1) the modelling of infectious diseases with respect to population structures and subpopulations as well as disease spreading. And (2) game theoretical analyses regarding the vaccination decisions of individuals. 
+The following provides a small review of the literature concerning (1) the modelling of infectious diseases with respect to population structures and subpopulations as well as disease spreading. And (2) a game theoretical analysis regarding the vaccination decisions of individuals. 
 
 The work of \cite{kermack1927} is pivotal in the field of epidemiology, particularly concerning the spread of an infectious diseases in a population. Susceptible persons get infected based on the transmission rate of the disease and the size of the infectious subpopulation. They finally recover or die from the disease and hence join and stay in the recovered pool. This and subsequent compartmental models are commonly referred to as SIR-models of infectious diseases. 
 As outlined in \cite{earn2008}, respectively in \cite{dadlani2013} or \cite{sun2016}, there exist various adaptations of the SIR-compartmental-model to either allow for different subpopulations, or to modify the disease process.\footnote{The case of severe acute respiratory syndrome (SARS) serves as an example to model the infectious disease with an additional exposed subpopulations as an interphase between the susceptible and the infected state (SEI-models). Besides, certain diseases do not allow permanent recovery and the person affected joins the susceptible pool again. Examples include gonorrhoea or encephalitis, which are represented in SIS-models and do not comprise a recovered pool, or for instance the seasonality of influenza is represented in SIRS-models \citep{dadlani2013}.} 
@@ -205,7 +205,6 @@ with the integer \(n_{k}(t)\) representing the instantaneous number of infected 
 \subsection{Agent policy}
 
 A susceptible agent, being a rational utility-maximiser, faces the vaccination decision by solving the optimisation problem:
-
 \begin{equation}\label{eq:6}
 	\max_{{p_{vacc}}} \; U_k(\mathbf{x}_k(t), T),
 \end{equation}
@@ -245,8 +244,7 @@ with:
 		0&0&0&1 \\
 	  \end{array} \right)
 \end{equation}
-
-Given that the evolution of a stationary Markov chain is independent of any absolute time reference, without loss of generality \eqref{eq:7} can be rewritten using \(t = 0\). Employing \eqref{eq:8} and \eqref{eq:9}:
+Given that the evolution of a stationary Markov chain is independent of any absolute time reference, without loss of generality \eqref{eq:7} can be rewritten using \(t = 0\). Employing \eqref{eq:11} and \eqref{eq:12}:
 \begin{equation}\label{eq:13}
 	U_k(\mathbf{x}_k(0), T) = \mathbf{f}_k(0) \cdot \mathbf{x}_k(0) + \sum_{t=1}^{T} {\mathbf{f}_k(t) \cdot   \left(\frac{ \hat{\mathbf{Q}}_k}{1+r}\right)^t \cdot \mathbf{x}_k(0) }
 \end{equation}
@@ -266,8 +264,7 @@ where:
 \begin{equation}\label{eq:17}
 	C_{notv,k}=C_{i,k} \cdot \left( \frac{\hat{\lambda}_{k}}{\gamma_{k}-\hat{\lambda}_{k}} \right) \cdot \left[\sum_{t = 1}^{T} \left(\frac{1-\hat{\lambda}_{k}}{1+r}\right)^t - \sum_{t = 1}^{T}\left(\frac{1-\gamma_k}{1+r}\right)^t\right]
 \end{equation}
-
-Equation \eqref{eq:17} is linear in \(p_{vacc}\), so it has only one global maximum which depends on the relative cost of each decision. In particular, the preferred strategies are the following:
+Equation \eqref{eq:16} is linear in \(p_{vacc}\), so it has only one global maximum which depends on the relative cost of each decision. In particular, the preferred strategies are the following:
 \begin{equation}\label{eq:18}
 	\begin{array}
 	{@{}lr@{}}
@@ -276,14 +273,14 @@ Equation \eqref{eq:17} is linear in \(p_{vacc}\), so it has only one global maxi
         {p_{vacc}\in(0,1),} & \text{for }C_{v,k}=C_{notv,k} \\
     \end{array}
 \end{equation}
-Thus, agents follow a pure strategy for almost all values of \(C_{notv,k}\). It is clear from Equation\eqref{eq:18} that \textit{ceteris paribus} a different vaccination strategy will be chosen depending on an agent's beliefs, manifested through different relative values for \(C_{v,k}\) and \(C_{i,k}\). In particular, it is expected that individuals skeptical towards vaccines will preferentially decide not to vaccinate for a given \(\hat{\lambda}_{k}\) and \(T\), as they consider the costs to be higher than what individuals who believe in the effectiveness of vaccines do.
+Thus, agents follow a pure strategy for almost all values of \(C_{notv,k}\). Following equation \eqref{eq:18}, it becomes clear that \textit{ceteris paribus} a different vaccination strategy will be chosen depending on an agent's beliefs, manifested through different relative values for \(C_{v,k}\) and \(C_{i,k}\). In particular, it is expected that individuals skeptical towards vaccines will preferentially decide not to vaccinate for a given \(\hat{\lambda}_{k}\) and \(T\), as they consider the costs to be higher than what individuals who believe in the effectiveness of vaccines do.
 
 %--------------------
 \subsection{Network structure} 
 The hierarchical configuration model in \cite{Stegehuis2016} provides an orientation for the model which is employed in this thesis. Adopting the two belief-groups, these are identified as sub-communities of the whole population. Each group is assumed to have a close intra-connection and a looser inter-connection. A small-world model is employed by formulating Watts-Strogatz networks \cite{watts1998} for every group, which are then connected as outlined below. 
 
 Each community \(G\in{\{T,S\}}\) is a subset of the whole population \(N\), \(G\subset{N}\), with T representing 'trusters' and S representing 'skepticals'. Furthermore, 
-\begin{equation}
+\begin{equation}\label{eq:19}
 \(g\colon \mathbb{N} \rightarrow{\{1,2\}}, 
 \begin{align*}
 g(i)\mapsto \left\{
@@ -294,7 +291,7 @@ g(i)\mapsto \left\{
 \end{equation}
 indicates community-membership for an individual agent \(i\in{N}\).
 The groups consist of a total of \(n_{G}\) members, according to \(n_{G}=\sum_{i\in{N}}p_{G}(i)=p_{G}(i)*n\). With \(n={\[\|N\|}\) being the number of nodes in the total population \(N\). Furthermore, \(p_{G}(i)\) defines the probabilistic group allocation for a node \(i\) to be assigned to group \(m\in{\{1,2\}}\), such that 
-\begin{equation} 
+\begin{equation}\label{eq:20} 
 \begin{align*}
 \(p_{G}(i)=\left\{
 \begin{array}{ll}	p_{1}, & i\textrm{ assigned to }T \\
@@ -307,10 +304,14 @@ and \(p_{G}(i)\) is independent of the individual agent \(i\).
 The Watts-Strogatz graph for every group \(G\subset{N}\) is then built by taking into account \(k(i)\), the number of nearest neighbours of \(i\) that \(i\) is connected to in a ring topology. Following, the network is adjusted by looping over the edges in each group, which are then rewired according to \(p_{rew}\in{(0,1)}\). 
 
 Thereafter, the two graphs are combined by adding an additional fraction of the edges in both groups for any two members \(i,j\in{N},i\neq j,\) of different groups, requiring \(g(i)\neq g(j)\). The amount of edges \(e_{add}\) is the fraction according to 
-\begin{equation}
+\begin{equation}\label{eq:21}
 e_{add}=a*e_{G}=a*\bigg(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j)\bigg),
 \end{equation}
- with \(a\in{(0,1)}\), and \(e_{G}=(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j))\) the total of edges in both groups. Any two members of different groups are then randomly connected until the amount of added connections reaches \(e_{add}\).  
+with \(a\in{(0,1)}\), and 
+\begin{equation}\label{eq:22}
+	e_{G}=(\sum_{i\in{T}}k(i) + \sum_{j\in{S}}k(j)),
+\end{equation} 
+the total of edges in both groups. Any two members of different groups are then randomly connected until the amount of added connections reaches \(e_{add}\).  
 
 %-----------------------------------------------------------------------------------------------------------------------------
 %-----------------------------------------------------------------------------------------------------------------------------
