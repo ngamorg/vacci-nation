@@ -20,10 +20,10 @@ class GroupBehavior():
         self.type = type
         if type == Group.SKEPTICAL:
             self.Ci = 1
-            self.Cv = 0.05
+            self.Cv = 0.2
         elif type == Group.TRUSTER:
             self.Ci = 1
-            self.Cv = 0.01
+            self.Cv = 0.1
 
 
 class Agent(object):
@@ -37,7 +37,7 @@ class Agent(object):
     r = 0.01
 
     # min 3-4
-    T = 10  # (monthly)  # 0.0 <= beta <= 1.0
+    T = 5  # (monthly)  # 0.0 <= beta <= 1.0
     beta = 0.1
 
     num_vac = 0
@@ -45,6 +45,8 @@ class Agent(object):
     num_vacS = 0
     num_sus = 0
     num_inf = 0
+    num_infT = 0
+    num_infS = 0
     num_rec = 0
 
     def __init__(self, id, age, health, group):
@@ -117,7 +119,7 @@ class Agent(object):
         if p < self._lambda_k:
             self._health_next = Health.INFECTED
 
-        # Get vaccinated? (Decide once in T days)
+        # Get vaccinated? (Decide once in 30 days)
         self.look(depth_neighbors, agents)
         dec = np.random.uniform(0.0, 1.0)
         if dec < 1/self.T and not self._health_next == Health.INFECTED:
@@ -179,8 +181,8 @@ class Agent(object):
             pvacc = 1.0
         else:
             pvacc = np.random.uniform(0.0, 1.0)
-        if lambda_rel_k > 0:
-            print(self._group, pvacc, Cv_k, Cnotv_k, "s0 / 1", sum[0], sum[1], "g, l", gamma_k, lambda_rel_k)
+        #if lambda_rel_k > 0:
+            #print(self._group, pvacc, Cv_k, Cnotv_k, "s0 / 1", sum[0], sum[1], "g, l", gamma_k, lambda_rel_k)
 
         # Update health state based on pvacc
         p = np.random.uniform(0.0, 1.0)
