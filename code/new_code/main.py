@@ -4,16 +4,26 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.lines import Line2D
 
+from enum import Enum
+
 from small_world_network import SmallWorldNetwork
 
 from agent import Agent, Health, Group, GroupBehavior
+
+class PlotMode(Enum):
+    MP4PLOT = 0
+    ONLYPLOT = 1
+    VACCIPLOT = 2
+
+
+mode = PlotMode.VACCIPLOT
 
 n = 1000
 #                    Trust Skept
 group_percentages = [0.5, 0.5]
 k = 8
 change_edge_percentage = 0.2
-alpha = 0.3
+alpha = 0.05
 
 groups = [Group.TRUSTER, Group.SKEPTICAL]
 group_behaviours = [GroupBehavior(Group.TRUSTER), GroupBehavior(Group.SKEPTICAL)]
@@ -30,12 +40,13 @@ depth = 1
 
 Agent.beta = 0.05
 
-frames = 100
+frames = 70
 fps = 4
 
 def setup():
-    global agent
-
+    global agents
+    agents = []
+    print
     G = SmallWorldNetwork(n, group_percentages, alpha, k, change_edge_percentage, depth)
 
     # Create Agent for every node
@@ -80,9 +91,15 @@ def count_status(agents):
     num_vac = 0
     num_vacT = 0
     num_vacS = 0
+    num_infT = 0
+    num_infS = 0
 
     for agent in agents:
         if agent.get_health_status() == Health.INFECTED:
+            if agent._group == Group.TRUSTER:
+                num_infT += 1
+            if agent._group == Group.SKEPTICAL:
+                num_infS += 1
             num_inf += 1
         if agent.get_health_status() == Health.RECOVERED:
             num_rec += 1
@@ -101,6 +118,8 @@ def count_status(agents):
     Agent.num_rec = num_rec
     Agent.num_vacT = num_vacT
     Agent.num_vacS = num_vacS
+    Agent.num_infT = num_infT
+    Agent.num_infS = num_infS
 
 
 def export(net, agents, v):
@@ -167,13 +186,13 @@ def health2num(health):
     :param health:
     :return: num(health)
     """
-    if health == agent._health.SUSCEPTIBLE:
+    if health == Health.SUSCEPTIBLE:
         return 0
-    if health == agent._health.INFECTED:
+    if health == Health.INFECTED:
         return 1
-    if health == agent._health.RECOVERED:
+    if health == Health.RECOVERED:
         return 2
-    if health == agent._health.VACCINATED:
+    if health == Health.VACCINATED:
         return 3
 
 
@@ -233,44 +252,51 @@ def time_stamp(iteration):
     :param iteration:
     :return: void
     """
-    print(iteration)
+    #print(iteration)
 
-    global fig
+    global fig, agents, plot, vacci_plot
     simulate(world, group_behaviours, agents)
     #clears figure
 
+    if mode == PlotMode.MP4PLOT:
+        fig.clf()
 
-    fig.clf()
+        n0, n1, h0, h1 = split_groups(world.network, world.group_colors, generate_health_list(agents))
 
-    n0, n1, h0, h1 = split_groups(world.network, world.group_colors, generate_health_list(agents))
+        edges = nx.draw_networkx_edges(world.network, pos, width=0.1, edgelist=world.network.edges)
 
-    edges = nx.draw_networkx_edges(world.network, pos, width=0.1, edgelist=world.network.edges)
+        ch0 = health_list_to_color(h0)
+        ch1 = health_list_to_color(h1)
+        nodes0 = nx.draw_networkx_nodes(n0, pos, node_size=7, node_shape='^', nodelist=n0,
+                                        node_color=ch0, label='Trusters')
+        nodes1 = nx.draw_networkx_nodes(n1, pos, node_size=7, nodelist=n1, node_color=ch1, label='Skepticals')
+        plt.legend(scatterpoints=1)
+        legend_entries = [Line2D([0], [0], color="navy", marker='^', lw=0),
+                          Line2D([0], [0], color="navy", marker='o', lw=0),
+                          Line2D([0], [0], color="yellow", lw=2),
+                          Line2D([0], [0], color="red", lw=2),
+                          Line2D([0], [0], color="green", lw=2),
+                          Line2D([0], [0], color="navy", lw=2)]
 
-    ch0 = health_list_to_color(h0)
-    ch1 = health_list_to_color(h1)
-    nodes0 = nx.draw_networkx_nodes(n0, pos, node_size=7, node_shape='^', nodelist=n0,
-                                    node_color=ch0, label='Trusters')
-    nodes1 = nx.draw_networkx_nodes(n1, pos, node_size=7, nodelist=n1, node_color=ch1, label='Skepticals')
-    plt.legend(scatterpoints=1)
-    legend_entries = [Line2D([0], [0], color="navy", marker='^', lw=0),
-                      Line2D([0], [0], color="navy", marker='o', lw=0),
-                      Line2D([0], [0], color="yellow", lw=2),
-                      Line2D([0], [0], color="red", lw=2),
-                      Line2D([0], [0], color="green", lw=2),
-                      Line2D([0], [0], color="navy", lw=2)]
+        plt.legend(legend_entries, ["Truster", "Skeptical", "Susceptible", "Infected", "Recovered", "Vaccinated"])
 
-    plt.legend(legend_entries, ["Truster", "Skeptical", "Susceptible", "Infected", "Recovered", "Vaccinated"])
+        i = iteration
+        count_status(agents)
+        plot[i]['sus'] = Agent.num_sus
+        plot[i]['inf'] = Agent.num_inf
+        plot[i]['rec'] = Agent.num_rec
+        plot[i]['vac'] = Agent.num_vac
+        plot[i]['vacT'] = Agent.num_vacT
+        plot[i]['vacS'] = Agent.num_vacS
+        plot[i]['infT'] = Agent.num_infT
+        plot[i]['infS'] = Agent.num_infS
+        plot[i]['recvac'] = Agent.num_rec + Agent.num_vac
 
+    if mode == PlotMode.VACCIPLOT:
+        i = iteration
+        count_status(agents)
+        vacci_plot[vacci_iteration][i] += Agent.num_vac
 
-    i = iteration
-    count_status(agents)
-    plot[i]['sus'] = Agent.num_sus
-    plot[i]['inf'] = Agent.num_inf
-    plot[i]['rec'] = Agent.num_rec
-    plot[i]['vac'] = Agent.num_vac
-    plot[i]['vacT'] = Agent.num_vacT
-    plot[i]['vacS'] = Agent.num_vacS
-    plot[i]['recvac'] = Agent.num_rec + Agent.num_vac
     return world.network
 
 def group_neighbors():
@@ -287,31 +313,76 @@ def simulate_animation():
     ani.save('network.mp4', fps=fps, extra_args=['-vcodec', 'libx264'])
 
     plt.close()
-    fig2 = plt.figure()
-    fig2.clf()
-    ax = fig2.add_subplot(111, axisbelow=True)
-    print(plot)
-    ax.plot(range(frames), [elem['sus'] for elem in plot], 'yellow', lw=1.5, label="Susceptible")
-    ax.plot(range(frames), [elem['vac'] for elem in plot], 'navy', lw=1.5, label="Vaccinated")
-    ax.plot(range(frames), [elem['vacT'] for elem in plot], 'skyblue', lw=1.5, label="VaccinatedT")
-    ax.plot(range(frames), [elem['vacS'] for elem in plot], 'cyan', lw=1.5, label="VaccinatedS")
-    ax.plot(range(frames), [elem['rec'] for elem in plot], 'green', lw=1.5, label="Recovered")
-    ax.plot(range(frames), [elem['inf'] for elem in plot], 'red', lw=1.5, label="Infected")
-    ax.plot(range(frames), [elem['recvac'] for elem in plot], 'darkgrey', lw=1.5, label="Recovered or Vaccinated")
+    if mode == PlotMode.MP4PLOT or mode == PlotMode.ONLYPLOT:
+        fig2 = plt.figure()
+        fig2.clf()
+        ax = fig2.add_subplot(111, axisbelow=True)
+        print(plot)
+        ax.plot(range(frames), [elem['sus'] for elem in plot], 'yellow', lw=1.5, label="Susceptible")
+        ax.plot(range(frames), [elem['vac'] for elem in plot], 'navy', lw=1.5, label="Vaccinated")
+        ax.plot(range(frames), [elem['vacT'] for elem in plot], 'skyblue', lw=1.5, label="Vaccinated Truster")
+        ax.plot(range(frames), [elem['vacS'] for elem in plot], 'cyan', lw=1.5, label="Vaccinated Skeptical")
+        ax.plot(range(frames), [elem['rec'] for elem in plot], 'green', lw=1.5, label="Recovered")
+        ax.plot(range(frames), [elem['inf'] for elem in plot], 'red', lw=1.5, label="Infected")
+        ax.plot(range(frames), [elem['infT'] for elem in plot], 'tomato', lw=1.5, label="Infected Truster")
+        ax.plot(range(frames), [elem['infS'] for elem in plot], 'pink', lw=1.5, label="Infected Skeptical")
+        ax.plot(range(frames), [elem['recvac'] for elem in plot], 'darkgrey', lw=1.5, label="Recovered or Vaccinated")
+        ax.set_ylim(0, world.network.number_of_nodes())
+        ax.set_xlim(0, frames)
+        plt.legend()
+        plt.show()
+
+
+if mode == PlotMode.MP4PLOT or mode == PlotMode.ONLYPLOT:
+    fig = plt.figure(dpi=300)
+
+    world = setup()
+    plot = [{} for i in range(frames)]
+
+    # compute the position of all nodes in the network
+    pos = nx.spring_layout(world.network)
+
+    # start the animation
+    simulate_animation()
+
+if mode == PlotMode.VACCIPLOT:
+    fig = plt.figure(dpi=300)
+    plot = [{} for i in range(frames)]
+    vacci_iteration = 0
+    start = 0.1
+    step = 0.2
+    end = 0.9
+    total_vacci_iterations = int((end - start) / step + 1)
+    print(total_vacci_iterations)
+    vacci_plot = [[0 for i in range(frames)] for i in range(total_vacci_iterations)]
+    tries_per_iteration = 20
+    for vacci_iteration in range(total_vacci_iterations):
+        group_percentage_left = round(start + vacci_iteration * step, 1)
+        print(str(group_percentage_left) + " Truster", vacci_iteration)
+        group_percentages[0] = group_percentage_left
+        group_percentages[1] = round(1 - group_percentage_left, 1)
+        for try_iteration in range(tries_per_iteration):
+            print("try: ", try_iteration)
+            world = setup()
+            simulate_animation()
+
+    vacci_colors = ["red", "yellow", "green", "aqua", "navy"]
+
+    fig3 = plt.figure()
+    fig3.clf()
+    ax = fig3.add_subplot(111, axisbelow=True)
     ax.set_ylim(0, world.network.number_of_nodes())
     ax.set_xlim(0, frames)
+    for vacci_iteration in range(total_vacci_iterations):
+
+        for i in range(frames):
+            vacci_plot[vacci_iteration][i] /= tries_per_iteration
+
+        group_percentage_left = round(start + vacci_iteration * step, 1)
+        group_percentage_right = round(1 - group_percentage_left, 1)
+        ax.plot(range(frames), vacci_plot[vacci_iteration], vacci_colors[vacci_iteration], lw=1.5, label=str(group_percentage_left) + " Truster - " + str(group_percentage_right) + " Skeptical" )
+
     plt.legend()
     plt.show()
-
-
-world = setup()
-fig = plt.figure(dpi=300)
-plot = [{} for i in range(frames)]
-
-#compute the position of all nodes in the network
-pos = nx.spring_layout(world.network)
-
-#start the animation
-simulate_animation()
 
 exit()
