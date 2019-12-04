@@ -23,7 +23,7 @@ START changable variables
 """
 
 # define what the output should look like
-mode = PlotMode.VACCIPLOT
+mode = PlotMode.MP4PLOT
 # expected number of nodes of the network on which the simulation runs on
 n = 1000
 
@@ -315,6 +315,7 @@ def time_stamp(iteration):
 
         plt.legend(legend_entries, ["Truster", "Skeptical", "Susceptible", "Infected", "Recovered", "Vaccinated"])
 
+    if mode == PlotMode.MP4PLOT or mode == PlotMode.ONLYPLOT:
         i = iteration
         count_status(agents)
         plot[i]['sus'] = Agent.num_sus
@@ -432,7 +433,7 @@ if mode == PlotMode.VACCIPLOT:
     ax.set_xlim(0, frames)
     plt.ylabel("vaccinated agents")
     plt.xlabel("iteration")
-    plt.title("avg. vaccination over " + str(simulations_per_percentage) + " simulations with respect to different group percentages")
+    plt.title("avg. vaccination over " + str(simulations_per_percentage) + " simulations")
 
     tvac_div_by_svac = [0 for i in range(total_vacci_iterations)]
 
