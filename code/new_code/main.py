@@ -24,7 +24,6 @@ START changable variables
 
 # define what the output should look like
 mode = PlotMode.VACCIPLOT
-
 # expected number of nodes of the network on which the simulation runs on
 n = 1000
 
@@ -40,6 +39,9 @@ change_edge_percentage = 0.2
 
 # number of edges that are added between two different groups i, j is alpha * ([number of nodes in i] + [number of nodes in j])
 alpha = 0.05
+
+# how far agents look into the future when deciding to vaccinate (days)
+Agent.T = 5
 
 # same length as group_percentages, define the group of every initial graph
 groups = [Group.TRUSTER, Group.SKEPTICAL]
@@ -62,7 +64,7 @@ depth = 1
 Agent.beta = 0.05
 
 # number of iterations of the simulation
-frames = 70
+frames = 100
 
 # frames per second of the simulation
 fps = 4
@@ -329,6 +331,8 @@ def time_stamp(iteration):
         i = iteration
         count_status(agents)
         vacci_plot[vacci_iteration][i] += Agent.num_vac
+        vacci_plot_truster[vacci_iteration][i] += Agent.num_vacT
+
 
     return world.network
 
@@ -350,6 +354,9 @@ def simulate_animation():
         fig2 = plt.figure()
         fig2.clf()
         ax = fig2.add_subplot(111, axisbelow=True)
+        plt.title("SIVR")
+        plt.ylabel("agents")
+        plt.xlabel("iterations")
         print(plot)
         ax.plot(range(frames), [elem['sus'] for elem in plot], 'yellow', lw=1.5, label="Susceptible")
         ax.plot(range(frames), [elem['vac'] for elem in plot], 'navy', lw=1.5, label="Vaccinated")
@@ -389,13 +396,14 @@ if mode == PlotMode.VACCIPLOT:
     fig = plt.figure(dpi=300)
     plot = [{} for i in range(frames)]
     vacci_iteration = 0
-    tries_per_percentage = 20
+    simulations_per_percentage = 20
     start = 0.1
     step = 0.2
     end = 0.9
     total_vacci_iterations = int((end - start) / step + 1)
     print(total_vacci_iterations)
     vacci_plot = [[0 for i in range(frames)] for i in range(total_vacci_iterations)]
+    vacci_plot_truster = [[0 for i in range(frames)] for i in range(total_vacci_iterations)]
 
     """
     simulate all
@@ -405,8 +413,9 @@ if mode == PlotMode.VACCIPLOT:
         print(str(group_percentage_left) + " Truster", vacci_iteration)
         group_percentages[0] = group_percentage_left
         group_percentages[1] = round(1 - group_percentage_left, 1)
-        for try_iteration in range(tries_per_percentage):
-            print("try: ", try_iteration)
+
+        for try_iteration in range(simulations_per_percentage):
+            print(str(group_percentage_left), "simulation:", try_iteration)
             world = setup()
             simulate_animation()
 
@@ -414,17 +423,26 @@ if mode == PlotMode.VACCIPLOT:
 
 
     """
-    average and plot all
+    average and plot both plots
     """
     fig3 = plt.figure()
     fig3.clf()
     ax = fig3.add_subplot(111, axisbelow=True)
     ax.set_ylim(0, world.network.number_of_nodes())
     ax.set_xlim(0, frames)
+    plt.ylabel("vaccinated agents")
+    plt.xlabel("iteration")
+    plt.title("avg. vaccination over " + str(simulations_per_percentage) + " simulations with respect to different group percentages")
+
+    tvac_div_by_svac = [0 for i in range(total_vacci_iterations)]
+
     for vacci_iteration in range(total_vacci_iterations):
 
         for i in range(frames):
-            vacci_plot[vacci_iteration][i] /= tries_per_percentage
+            vacci_plot[vacci_iteration][i] /= simulations_per_percentage
+            vacci_plot_truster[vacci_iteration][i] /= simulations_per_percentage
+
+        tvac_div_by_svac[vacci_iteration] = vacci_plot_truster[vacci_iteration][frames - 1] / (vacci_plot[vacci_iteration][frames - 1] - vacci_plot_truster[vacci_iteration][frames - 1])
 
         group_percentage_left = round(start + vacci_iteration * step, 1)
         group_percentage_right = round(1 - group_percentage_left, 1)
@@ -432,5 +450,23 @@ if mode == PlotMode.VACCIPLOT:
 
     plt.legend()
     plt.show()
+    fig4 = plt.figure()
+
+    ax = fig4.add_subplot(111, axisbelow=True)
+    ax.set_xlim(0.0, 1.0)
+    ax.set_ylim(0, 30.0)
+    plt.xlabel("truster p")
+    plt.ylabel("#tvacc / #svacc")
+    plt.title("vaccination ratio between trusters and skepticals")
+    xvals = [(start + i * step) for i in range(total_vacci_iterations)]
+
+    print(xvals)
+    print(tvac_div_by_svac)
+
+    ax.plot(xvals, tvac_div_by_svac, 'navy', lw=1.5, label="(#truster vaccinations) / (#skeptical vaccinations) with #truster = (p * #agents)")
+
+    plt.legend()
+    plt.show()
+
 
 exit()

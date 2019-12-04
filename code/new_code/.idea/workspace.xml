@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="413a449a-ee6b-4f93-b107-39ac60647623" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/network.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/network.mp4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/small_world_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/small_world_network.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -138,7 +136,19 @@
       <workItem from="1574855068267" duration="1308000" />
       <workItem from="1574856672501" duration="37000" />
       <workItem from="1574937067397" duration="4944000" />
+      <workItem from="1575376332884" duration="1755000" />
+      <workItem from="1575446714078" duration="2950000" />
+      <workItem from="1575453826648" duration="1983000" />
+      <workItem from="1575471896224" duration="3327000" />
     </task>
+    <task id="LOCAL-00001" summary="added some comments">
+      <created>1575379481152</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1575379481153</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,6 +166,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added some comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="added some comments" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/new_code$main.coverage" NAME="main Coverage Results" MODIFIED="1574942591290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
