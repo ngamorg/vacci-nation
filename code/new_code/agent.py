@@ -3,6 +3,7 @@ import numpy as np
 from enum import Enum
 
 
+
 class Health(Enum):
     SUSCEPTIBLE = 0
     INFECTED = 1
@@ -13,17 +14,6 @@ class Health(Enum):
 class Group(Enum):
     SKEPTICAL = 0
     TRUSTER = 1
-
-
-class GroupBehavior():
-    def __init__(self, type):
-        self.type = type
-        if type == Group.SKEPTICAL:
-            self.Ci = 1
-            self.Cv = 0.2
-        elif type == Group.TRUSTER:
-            self.Ci = 1
-            self.Cv = 0.1
 
 
 class Agent(object):

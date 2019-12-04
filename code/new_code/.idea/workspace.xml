@@ -2,23 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="413a449a-ee6b-4f93-b107-39ac60647623" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/plots_vids/psvir1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/psvir2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/psvir3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/psvir5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/psvir6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/psvir7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/pv1_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/pv1_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/pv2_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/pv2_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/pvid1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/pvid2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/vid1.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots_vids/vid2.mp4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network.mp4" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +51,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/main.py" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -154,7 +140,7 @@
       <workItem from="1575446714078" duration="2950000" />
       <workItem from="1575453826648" duration="1983000" />
       <workItem from="1575471896224" duration="3327000" />
-      <workItem from="1575477870087" duration="3232000" />
+      <workItem from="1575477870087" duration="4326000" />
     </task>
     <task id="LOCAL-00001" summary="added some comments">
       <created>1575379481152</created>
@@ -163,7 +149,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575379481153</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added plots and videos">
+      <created>1575481115209</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1575481115209</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,7 +177,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added some comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="added some comments" />
+    <MESSAGE value="added plots and videos" />
+    <option name="LAST_COMMIT_MESSAGE" value="added plots and videos" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/new_code$main.coverage" NAME="main Coverage Results" MODIFIED="1575479784562" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

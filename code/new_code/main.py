@@ -8,7 +8,19 @@ from enum import Enum
 
 from small_world_network import SmallWorldNetwork
 
-from agent import Agent, Health, Group, GroupBehavior
+from agent import Agent, Health, Group
+
+
+class GroupBehavior:
+
+    def __init__(self, type):
+        self.type = type
+        if type == Group.SKEPTICAL:
+            self.Ci = 1
+            self.Cv = skeptical_cost_vaccination
+        elif type == Group.TRUSTER:
+            self.Ci = 1
+            self.Cv = truster_cost_vaccination
 
 class PlotMode(Enum):
     # generates a mp4 and a plot with all (sub) health states
@@ -22,8 +34,13 @@ class PlotMode(Enum):
 START changable variables
 """
 
+# set the cost of vaccination for the specific groups
+truster_cost_vaccination = 0.1
+skeptical_cost_vaccination = 0.2
+
+
 # define what the output should look like
-mode = PlotMode.MP4PLOT
+mode = PlotMode.ONLYPLOT
 # expected number of nodes of the network on which the simulation runs on
 n = 1000
 
@@ -46,6 +63,7 @@ Agent.T = 5
 # same length as group_percentages, define the group of every initial graph
 groups = [Group.TRUSTER, Group.SKEPTICAL]
 # same length as group_percentages, define the believes of every group
+
 group_behaviours = [GroupBehavior(Group.TRUSTER), GroupBehavior(Group.SKEPTICAL)]
 
 # initially infected
@@ -55,6 +73,8 @@ lim_init_infected = [0.005, 0.005]
 # initially vaccinated
 #                 Trust  Skept
 lim_init_vacci = [0.005, 0.005]
+
+
 
 
 # change the depth of view the agents use to estimate their chance of getting infected, 1 => direct neighbors, 2 => neighbors of neighbors
@@ -77,6 +97,7 @@ agents = list()
 
 age_mu = 40
 age_sigma = 15
+
 
 def setup():
     global agents
