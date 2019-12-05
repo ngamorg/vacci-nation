@@ -1,4 +1,4 @@
-default: n = 1000, k = 8, beta = gamma = 0.05, lim_init_infected = [0.005, 0.005] T = 5, alpha = 0.3, lim_init_vacc = [0.005, 0.005] Cv_skeptical = 0.2, Cv_truster = 0.1, group_percentages = [0.5, 0.5]
+default: n = 1000, k = 8, beta = gamma = 0.05, lim_init_infected = [0.005, 0.005] T = 5, alpha = 0.3, lim_init_vacc = [0.005, 0.005] Cv_skeptical = 0.2i (cost of vaccinating skeptical), Cv_truster = 0.1 (cost of vaccinating truster = truster_cost_vaccination), group_percentages = [0.5, 0.5]
 
 changes:
 pv1_1: alpha = 0.05
@@ -21,3 +21,11 @@ psvir4: default
 psvir5: Cv_skept = 0.25, Cv_truster = 0.05
 psvir6: Cv_skept = 0.3, Cv_truster = 0.01
 psvir7: T = 30, cv_skept = 3, cv_trust = 1
+psvir8: T = 2, cv_skept = 0.07, cv_trust = 0.005
+psvir9: T = 2, cv_s = 0.04, cv_trust = 0.02
+psvir10: T = 2,  cv_s = 0.1, cv_t = 0.001
+psvir11: T = 30 cv_s = 4, cv_t = 1  
+psvir12: T = 30, cv_s = 5, cv_t = 3
+psvir13: T = 30, cv_s = 3, cv_t = 0.5
+psvir14: T = 10, cv_s = 0.3, cv_t = 0.1
+psvir15: T = 10, cv_s = 1, cv_t = 0.1	
