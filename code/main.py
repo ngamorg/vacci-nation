@@ -40,7 +40,7 @@ skeptical_cost_vaccination = 0.2
 
 
 # define what the output should look like
-mode = PlotMode.ONLYPLOT
+mode = PlotMode.MP4PLOT
 # expected number of nodes of the network on which the simulation runs on
 n = 1000
 
