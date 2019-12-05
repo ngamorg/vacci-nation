@@ -1,4 +1,4 @@
-default: n = 1000, k = 8, bet = gama = 0.05, lim_init_infected = [0.005, 0.005] T = 5, alpha = 0.3, lim_init_vacc = [0.005, 0.005] Cv_skeptical = 0.2, Cv_truster = 0.1, group_percentages = [0.5, 0.5]
+default: n = 1000, k = 8, beta = gamma = 0.05, lim_init_infected = [0.005, 0.005] T = 5, alpha = 0.3, lim_init_vacc = [0.005, 0.005] Cv_skeptical = 0.2, Cv_truster = 0.1, group_percentages = [0.5, 0.5]
 
 changes:
 pv1_1: alpha = 0.05
