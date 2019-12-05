@@ -369,7 +369,7 @@ def simulate_animation():
     """
     global fig
     ani = FuncAnimation(fig, time_stamp, frames=frames)
-    ani.save('network.mp4', fps=fps, extra_args=['-vcodec', 'libx264'])
+    ani.save('simulation.mp4', fps=fps, extra_args=['-vcodec', 'libx264'])
 
     plt.close()
     if mode == PlotMode.MP4PLOT or mode == PlotMode.ONLYPLOT:
