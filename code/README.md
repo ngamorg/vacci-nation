@@ -9,7 +9,7 @@ To reproduce our code generated results you need to have python installed and (i
 To produce different result you can change set the variable "mode" to different values:
 - "mode = PlotMode.ONLYPLOT": generates a SIVR plot (Susceptible, Infected, Truster, Recovered).
 - "mode = PlotMode.MP4PLOT": generates the plot from "mode = PlotMode.ONLYPLOT" and a simulaton.mp4 file which is an animation of the SIVR simulatoin, both represent the same simulation
-- "mode = PlotMode.VACCIPLOT": generates two plots. Every line in both of those plots represents the average over multiple simulations (default 20 simulation).
+- "mode = PlotMode.VACCIPLOT": generates two plots. Every line in both of those plots represents the average over multiple simulations (default 20 simulations).
 
 Following variables can be changed in the file "main.py" to produce different results, the first ones listed are the ones that differ in generating our results:
 - "mode": as explained above
