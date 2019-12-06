@@ -50,18 +50,15 @@ a Watts-Strogatz model. Two groups are assumed which represent smallworlds
 on their own. These two networks are then combined assuming that
 closeness in a group is larger than between groups.
 
-## Fundamental Questions
+## Fundamental Question
 
-(At the end of the project you want to find the answer to these questions)
-(Formulate a few, clear questions. Articulate them in sub-questions, from the more general to the more specific. )
-
-> * What is the relationship between social attitudes with respect to vaccination and the dynamics of epidemic episodes?
-> * What is the influence of health policy in relation to the laissez faire results in the presence of strong individual beliefs against immunization?
+> * What is the relationship between social beliefs with respect to vaccination and the dynamics of epidemic episodes?
+> * What is the influence of social network structure on the spread of infectious diseases and voluntary vaccination by rational agents?
 
 ## Expected Results
 
-(What are the answers to the above questions that you expect to find before starting your research?)
-
+> * Groups with higher subjective costs of vaccination with respect to infection/disease yield lower vaccine uptakes
+> * Trust in vaccinations will isolate or dampen the spread of a disease while distrust in vaccination will encourage a disease to break out in networks with multiple belief groups
 
 ## References 
 
@@ -127,13 +124,3 @@ nature 393(6684), 440.
 > * Wilson, E. B. and Worcester, J. (1945), `The law of mass action in epidemiology',
 Proceedings of the National Academy of Sciences of the United States of America
 31(1), 24.
-
-
-## Research Methods
-
-(Cellular Automata, Agent-Based Model, Continuous Modeling...) (If you are not sure here: 1. Consult your colleagues, 2. ask the teachers, 3. remember that you can change it afterwards)
-
-
-## Other
-
-(mention datasets you are going to use)
