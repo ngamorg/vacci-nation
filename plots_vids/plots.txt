@@ -1,13 +1,12 @@
 default: n = 1000, k = 8, beta = gamma = 0.05, lim_init_infected = [0.005, 0.005] T = 5, alpha = 0.3, lim_init_vacc = [0.005, 0.005] Cv_skeptical = 0.05 (cost of vaccinating skeptical), Cv_truster = 0.01 (cost of vaccinating truster = truster_cost_vaccination), group_percentages = [0.5, 0.5]
 
 changes:
-pv1_1: alpha = 0.05
+pv1_1: alpha = 0.05, mode = PlotMode.VACCIPLOT, #runs per group split = 1, group_percentages = [0.1, 0.3, 0.5, 0.7, 0.9] for trusters i.e (1 - p_truster) for skept
 pv1_2: same as pv1_1, goes with pv1_1
 pv2_1: alpha = 0.3
 pv2_2: same as pv2_1, goes with pv2_2
-vid1: alpha = 0.05
+vid1: alpha = 0.05, mode = PlotMode.MP4PLOT
 pvid1: same as vid1 (plot for the simulaion of vid1)
 vid2: alpha = 0.05, Cv_skeptical = 0.25, Cv_truster = 0.05
 pvid2: same as vid2 (plot for the simulation of vid2)
-pvs1_1: alpha = 0.05, #runs per group split = 1, group_percentages = [0.1, 0.3, 0.5, 0.7, 0.9] for trusters i.e (1 - p_truster) for skept
-Files starting with T....png according to name
+Files starting with T....png according to name, mode = PlotMode.ONLYPLOT
