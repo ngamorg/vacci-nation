@@ -489,6 +489,3 @@ if mode == PlotMode.VACCIPLOT:
 
     plt.legend()
     plt.show()
-
-
-exit()
