@@ -21,7 +21,7 @@ little incentive to get vaccinated ('trusters'). The other group is very skeptic
 towards the cost and return of vaccines and hence vaccinates much later, sometimes
 not at all ('skepticals').
 With 'anti-vaxing' groups becoming more popular and diseases thought to be
-extinct reappearing even in Central Europe 1 this question is gaining relevance
+extinct reappearing even in Central Europe, this question is gaining relevance
 and needs to be analysed in more detail.
 
 ## The Model
@@ -59,6 +59,9 @@ closeness in a group is larger than between groups.
 
 > * Groups with higher subjective costs of vaccination with respect to infection/disease yield lower vaccine uptakes
 > * Trust in vaccinations will isolate or dampen the spread of a disease while distrust in vaccination will encourage a disease to break out in networks with multiple belief groups
+
+## Reproduction
+Please, look for instructions in the /code folder.
 
 ## References 
 
