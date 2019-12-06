@@ -9,4 +9,4 @@ vid1: alpha = 0.05, mode = PlotMode.MP4PLOT
 pvid1: same as vid1 (plot for the simulaion of vid1)
 vid2: alpha = 0.05, Cv_skeptical = 0.25, Cv_truster = 0.05
 pvid2: same as vid2 (plot for the simulation of vid2)
-Files starting with T....png according to name, mode = PlotMode.ONLYPLOT
+Files starting with T....png according to name leading 0 means "0." i.e 001 -> 0.01, mode = PlotMode.ONLYPLOT
