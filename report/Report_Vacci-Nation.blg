@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: Report_Vacci-Nation.aux
+Case mismatch error between cite keys stegehuis2016 and Stegehuis2016
+---line 99 of file Report_Vacci-Nation.aux
+ : \citation{stegehuis2016
+ :                        }
+I'm skipping whatever remains of this command
+The style file: agsm.bst
+Database file #1: /Users/JuliusSiebenaller/Desktop/Vacci-Nation/Report/References.bib.bib
+You've used 25 entries,
+            2909 wiz_defined-function locations,
+            810 strings with 9311 characters,
+and the built_in function-call counts, 137663 in all, are:
+= -- 22519
+> -- 2035
+< -- 0
++ -- 11048
+- -- 630
+* -- 12295
+:= -- 27132
+add.period$ -- 25
+call.type$ -- 25
+change.case$ -- 349
+chr.to.int$ -- 25
+cite$ -- 25
+duplicate$ -- 404
+empty$ -- 847
+format.name$ -- 729
+if$ -- 24724
+int.to.chr$ -- 5
+int.to.str$ -- 0
+missing$ -- 26
+newline$ -- 78
+num.names$ -- 263
+pop$ -- 77
+preamble$ -- 1
+purify$ -- 375
+quote$ -- 0
+skip$ -- 344
+stack$ -- 0
+substring$ -- 32274
+swap$ -- 75
+text.length$ -- 350
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 98
+warning$ -- 0
+while$ -- 558
+width$ -- 0
+write$ -- 327
+(There was 1 error message)

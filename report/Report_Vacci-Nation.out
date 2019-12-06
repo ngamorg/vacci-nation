@@ -1,0 +1,14 @@
+\BOOKMARK [1][-]{section.1}{Introduction and Motivations}{}% 1
+\BOOKMARK [1][-]{section.2}{Literature Review}{}% 2
+\BOOKMARK [1][-]{section.3}{Description of the Model}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Epidemic dynamics}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Agent policy}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{Network structure}{section.3}% 6
+\BOOKMARK [1][-]{section.4}{Initial Setup and Baseline Parameters}{}% 7
+\BOOKMARK [1][-]{section.5}{Implementation}{}% 8
+\BOOKMARK [2][-]{subsection.5.1}{Creating the network}{section.5}% 9
+\BOOKMARK [2][-]{subsection.5.2}{Simulating the agents' behaviour}{section.5}% 10
+\BOOKMARK [1][-]{section.6}{Simulation Results and Discussion}{}% 11
+\BOOKMARK [1][-]{section.7}{Summary and Outlook}{}% 12
+\BOOKMARK [1][-]{section*.7}{Appendix}{}% 13
+\BOOKMARK [1][-]{section*.13}{References}{}% 14

@@ -1,0 +1,151 @@
+\begin{thebibliography}{xx}
+
+\harvarditem{Bauch \harvardand\ Bhattacharyya}{2012}{bauch2012}
+Bauch, C.~T. \harvardand\ Bhattacharyya, S.  \harvardyearleft
+  2012\harvardyearright , `Evolutionary game theory and social learning can
+  determine how vaccine scares unfold', {\em PLoS computational biology} {\bf
+  8}(4),~e1002452.
+
+\harvarditem{Bauch \harvardand\ Earn}{2004}{bauch2004}
+Bauch, C.~T. \harvardand\ Earn, D.~J.  \harvardyearleft 2004\harvardyearright ,
+  `Vaccination and the theory of games', {\em Proceedings of the National
+  Academy of Sciences} {\bf 101}(36),~13391--13394.
+
+\harvarditem{Dadlani}{2013}{dadlani2013}
+Dadlani, A.  \harvardyearleft 2013\harvardyearright , `Deterministic models in
+  epidemiology: from modeling to implementation'.
+
+\harvarditem[Earn et~al.]{Earn, Brauer, van~den Driessche \harvardand\
+  Wu}{2008}{earn2008}
+Earn, D., Brauer, F., van~den Driessche, P. \harvardand\ Wu, J.
+  \harvardyearleft 2008\harvardyearright , {\em Mathematical epidemiology},
+  Springer Berlin.
+
+\harvarditem[Fu et~al.]{Fu, Rosenbloom, Wang \harvardand\ Nowak}{2010}{fu2010}
+Fu, F., Rosenbloom, D.~I., Wang, L. \harvardand\ Nowak, M.~A.  \harvardyearleft
+  2010\harvardyearright , `Imitation dynamics of vaccination behaviour on
+  social networks', {\em Proceedings of the Royal Society B: Biological
+  Sciences} {\bf 278}(1702),~42--49.
+
+\harvarditem[Hancock et~al.]{Hancock, Veguilla, Lu, Zhong, Butler, Sun, Liu,
+  Dong, DeVos, Gargiullo et~al.}{2009}{hancock2009}
+Hancock, K., Veguilla, V., Lu, X., Zhong, W., Butler, E.~N., Sun, H., Liu, F.,
+  Dong, L., DeVos, J.~R., Gargiullo, P.~M. et~al.  \harvardyearleft
+  2009\harvardyearright , `Cross-reactive antibody responses to the 2009
+  pandemic h1n1 influenza virus', {\em New England Journal of Medicine} {\bf
+  361}(20),~1945--1952.
+
+\harvarditem{Heesterbeek}{2005}{heesterbeek2005}
+Heesterbeek, H.  \harvardyearleft 2005\harvardyearright , `The law of
+  mass-action in epidemiology: a historical perspective', {\em Ecological
+  paradigms lost: routes of theory change} pp.~81--104.
+
+\harvarditem{Keeling \harvardand\ Eames}{2005}{keeling2005}
+Keeling, M.~J. \harvardand\ Eames, K.~T.  \harvardyearleft
+  2005\harvardyearright , `Networks and epidemic models', {\em Journal of the
+  Royal Society Interface} {\bf 2}(4),~295--307.
+
+\harvarditem{Kermack \harvardand\ McKendrick}{1927}{kermack1927}
+Kermack, W.~O. \harvardand\ McKendrick, A.~G.  \harvardyearleft
+  1927\harvardyearright , `A contribution to the mathematical theory of
+  epidemics', {\em Proceedings of the royal society of london. Series A,
+  Containing papers of a mathematical and physical character} {\bf
+  115}(772),~700--721.
+
+\harvarditem[Liu et~al.]{Liu, Li, Qin, Liu, Wang \harvardand\
+  Wang}{2015}{liu2015}
+Liu, M., Li, D., Qin, P., Liu, C., Wang, H. \harvardand\ Wang, F.
+  \harvardyearleft 2015\harvardyearright , `Epidemics in interconnected
+  small-world networks', {\em PloS one} {\bf 10}(3),~e0120701.
+
+\harvarditem[Liu et~al.]{Liu, Wu \harvardand\ Zhang}{2012}{liu2012}
+Liu, X.-T., Wu, Z.-X. \harvardand\ Zhang, L.  \harvardyearleft
+  2012\harvardyearright , `Impact of committed individuals on vaccination
+  behavior', {\em Physical Review E} {\bf 86}(5),~051132.
+
+\harvarditem[Meyers et~al.]{Meyers, Pourbohloul, Newman, Skowronski
+  \harvardand\ Brunham}{2005}{meyers2005}
+Meyers, L.~A., Pourbohloul, B., Newman, M.~E., Skowronski, D.~M. \harvardand\
+  Brunham, R.~C.  \harvardyearleft 2005\harvardyearright , `Network theory and
+  sars: predicting outbreak diversity', {\em Journal of theoretical biology}
+  {\bf 232}(1),~71--81.
+
+\harvarditem{Moore \harvardand\ Newman}{2000}{moore2000}
+Moore, C. \harvardand\ Newman, M.~E.  \harvardyearleft 2000\harvardyearright ,
+  `Epidemics and percolation in small-world networks', {\em Physical Review E}
+  {\bf 61}(5),~5678.
+
+\harvarditem[Neumann et~al.]{Neumann, Noda \harvardand\
+  Kawaoka}{2009}{neumann2009}
+Neumann, G., Noda, T. \harvardand\ Kawaoka, Y.  \harvardyearleft
+  2009\harvardyearright , `Emergence and pandemic potential of swine-origin
+  h1n1 influenza virus', {\em Nature} {\bf 459}(7249),~931.
+
+\harvarditem{Newman \harvardand\ Watts}{1999}{newman1999}
+Newman, M.~E. \harvardand\ Watts, D.~J.  \harvardyearleft 1999\harvardyearright
+  , `Scaling and percolation in the small-world network model', {\em Physical
+  review E} {\bf 60}(6),~7332.
+
+\harvarditem{Pastor-Satorras \harvardand\ Vespignani}{2002}{pastor2002}
+Pastor-Satorras, R. \harvardand\ Vespignani, A.  \harvardyearleft
+  2002\harvardyearright , `Immunization of complex networks', {\em Physical
+  review E} {\bf 65}(3),~036104.
+
+\harvarditem{Rusu}{2015}{rusu2015}
+Rusu, E.  \harvardyearleft 2015\harvardyearright , `Network models in
+  epidemiology: Considering discrete and continuous dynamics', {\em arXiv
+  preprint arXiv:1511.01062} .
+
+\harvarditem[Shi et~al.]{Shi, Qiu, Niu, Ren, Ding \harvardand\
+  Chen}{2017}{shi2017}
+Shi, B., Qiu, H., Niu, W., Ren, Y., Ding, H. \harvardand\ Chen, D.
+  \harvardyearleft 2017\harvardyearright , `Voluntary vaccination through
+  self-organizing behaviors on locally-mixed social networks', {\em Scientific
+  reports} {\bf 7}(1),~2665.
+
+\harvarditem[Shim et~al.]{Shim, Grefenstette, Albert, Cakouros \harvardand\
+  Burke}{2012}{shim2012}
+Shim, E., Grefenstette, J.~J., Albert, S.~M., Cakouros, B.~E. \harvardand\
+  Burke, D.~S.  \harvardyearleft 2012\harvardyearright , `A game dynamic model
+  for vaccine skeptics and vaccine believers: measles as an example', {\em
+  Journal of Theoretical Biology} {\bf 295},~194--203.
+
+\harvarditem[Smith et~al.]{Smith, Vijaykrishna, Bahl, Lycett, Worobey, Pybus,
+  Ma, Cheung, Raghwani, Bhatt et~al.}{2009}{smith2009}
+Smith, G.~J., Vijaykrishna, D., Bahl, J., Lycett, S.~J., Worobey, M., Pybus,
+  O.~G., Ma, S.~K., Cheung, C.~L., Raghwani, J., Bhatt, S. et~al.
+  \harvardyearleft 2009\harvardyearright , `Origins and evolutionary genomics
+  of the 2009 swine-origin h1n1 influenza a epidemic', {\em Nature} {\bf
+  459}(7250),~1122.
+
+\harvarditem[Stegehuis et~al.]{Stegehuis, Van Der~Hofstad \harvardand\
+  Van~Leeuwaarden}{2016}{Stegehuis2016}
+Stegehuis, C., Van Der~Hofstad, R. \harvardand\ Van~Leeuwaarden, J.~S.
+  \harvardyearleft 2016\harvardyearright , `Epidemic spreading on complex
+  networks with community structures', {\em Scientific reports} {\bf 6},~29748.
+
+\harvarditem[Sun et~al.]{Sun, Jusup, Jin, Wang \harvardand\
+  Wang}{2016}{sun2016}
+Sun, G.-Q., Jusup, M., Jin, Z., Wang, Y. \harvardand\ Wang, Z.
+  \harvardyearleft 2016\harvardyearright , `Pattern transitions in spatial
+  epidemics: Mechanisms and emergent properties', {\em Physics of life reviews}
+  {\bf 19},~43--73.
+
+\harvarditem[Tornatore et~al.]{Tornatore, Vetro \harvardand\
+  Buccellato}{2014}{tornatore2014}
+Tornatore, E., Vetro, P. \harvardand\ Buccellato, S.~M.  \harvardyearleft
+  2014\harvardyearright , `Sivr epidemic model with stochastic perturbation',
+  {\em Neural Computing and Applications} {\bf 24}(2),~309--315.
+
+\harvarditem{Watts \harvardand\ Strogatz}{1998}{watts1998}
+Watts, D.~J. \harvardand\ Strogatz, S.~H.  \harvardyearleft
+  1998\harvardyearright , `Collective dynamics of 'small-world'networks', {\em
+  nature} {\bf 393}(6684),~440.
+
+\harvarditem{Wilson \harvardand\ Worcester}{1945}{wilson1945a}
+Wilson, E.~B. \harvardand\ Worcester, J.  \harvardyearleft
+  1945\harvardyearright , `The law of mass action in epidemiology', {\em
+  Proceedings of the National Academy of Sciences of the United States of
+  America} {\bf 31}(1),~24.
+
+\end{thebibliography}
