@@ -4,7 +4,7 @@ The core of the project. Here lies the implementation of the model described in 
 
 # Reproducibility
 
-To reproduce our code generated results you need to have python installed and (if working on Windows) FFmpeg to generate the mp4 animations, which you can download from http://ffmpeg.zeranoe.com/builds/. Then you can run the code with "python main.py". All our plots and videos are in the folder "plots_vids/". "plots.txt" in that folder describes all the (non-default) parameters that were used to generate these results.
+To reproduce our code generated results you need to have python installed (you need networkx, matplotlib and numpy i.e. if on linux "pip install networkx", "pip install matplotlib" and "pip install numpy") and (if working on Windows) FFmpeg to generate the mp4 animations, which you can download from http://ffmpeg.zeranoe.com/builds/. Then you can run the code with "python main.py". All our plots and videos are in the folder "plots_vids/". "plots.txt" in that folder describes all the (non-default) parameters that were used to generate these results.
 
 To produce different result you can change set the variable "mode" to different values:
 - "mode = PlotMode.ONLYPLOT": generates a SIVR plot (Susceptible, Infected, Truster, Recovered).
